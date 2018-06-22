@@ -1,0 +1,8 @@
+import circuitshuffle.Exercise
+
+model {
+	Iterable<Exercise> exerciseList
+}
+
+json tmpl.exercise(exerciseList ?: [])
+

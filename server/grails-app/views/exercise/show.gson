@@ -1,0 +1,7 @@
+import circuitshuffle.Exercise
+
+model {
+	Exercise exercise
+}
+
+json tmpl.exercise(exercise)

@@ -1,0 +1,12 @@
+import circuitshuffle.ExerciseHistory
+
+model {
+	ExerciseHistory exerciseHistory
+}
+
+json g.render(exerciseHistory,  [resolveTemplate: false, excludes: ["exercise"]] ) {
+	exercise {
+		id exerciseHistory.exercise.id
+		name exerciseHistory.exercise.name
+	}
+}

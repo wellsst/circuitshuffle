@@ -1,0 +1,104 @@
+<div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="space-around stretch">
+  <div><h3>Exercise history</h3></div>
+  <!--<mat-form-field class="demo-chip-list">
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let exercise of selectedExercises"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(exercise)">
+        {{exercise}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Filter exercises..."
+        #exerciseFilterInput
+        [formControl]="exerciseControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let exercise of filteredExercises | async" [value]="exercise">
+        {{ exercise }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>-->
+
+  <div class="mat-elevation-z8"
+       fxLayout="row wrap"
+       fxLayout.xs="column"
+       fxFlex="grow"
+       fxFill
+       fxLayoutAlign="stretch">
+    <mat-card>
+      <mat-card-title>Summaries</mat-card-title>
+      <mat-card-content>
+        <table mat-table matSort matSortActive="today" matSortDirection="desc" [dataSource]="dataSource" >
+
+          <ng-container matColumnDef="exercise">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Exercise</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.exercise}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="today">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Today</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.today}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="hours24">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 24 Hour</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.hours24}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="yesterday">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Yesterday</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.yesterday}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="days3">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 3 Day</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.days3}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="week">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Week</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.week}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="month">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Month</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.month}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Year</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.year}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="all">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> All</th>
+            <td mat-cell *matCellDef="let summary"> {{summary.all}}</td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!--<div *ngFor="let s of summaries">
+          {{s.exercise}} {{s.Today}}
+        </div>-->
+        <mat-paginator [pageSizeOptions]="[10, 20, 50, 200]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+      <!--<pre>{{summary | json}}</pre>-->
+    </mat-card>
+  </div>
+
+  <div>
+
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
+  <mat-sidenav
+    #drawer #sidenav
+    (keydown.escape)="close('escape')" disableClose
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">
+      <div>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list>
+        <a mat-list-item>
+          <mat-icon class="icon">input</mat-icon>
+          <span class="label">Login</span>
+        </a>
+        <a mat-list-item
+           routerLink="/">
+          <mat-icon class="icon">home</mat-icon>
+          <span class="label">Home</span>
+        </a>
+
+        <a mat-list-item routerLink="/view-history">History</a>
+        <a mat-list-item routerLink="/start-circuit">Start circuit</a>
+        <a mat-list-item routerLink="/add-reps">Add Reps</a>
+        <a mat-list-item routerLink="/exercise-list">Exercise list</a>
+      </mat-list>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <mat-toolbar color="primary">
+      <div fxShow="{{!sidenav.opened}}">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>CircuitShuffle</span>
+      <!--<div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+          <li>
+            <a>
+              <mat-icon class="icon">input</mat-icon>
+              <span class="label">Login</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/">
+              <mat-icon class="icon">home</mat-icon>
+              <span class="label">Home</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard">
+              <mat-icon class="icon">dashboard</mat-icon>
+              <span class="label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <mat-icon class="icon">input</mat-icon>
+              <span class="label">LogOut</span>
+            </a>
+          </li>
+        </ul>
+      </div>-->
+    </mat-toolbar>
+    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="15px">
+      <div>
+
+      </div>
+      <div fxFill>
+        <router-outlet></router-outlet>
+      </div>
+      <div>
+
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

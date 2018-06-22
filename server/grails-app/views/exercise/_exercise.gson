@@ -1,0 +1,17 @@
+import circuitshuffle.Exercise
+
+model {
+	Exercise exercise
+}
+
+json g.render(exercise, [resolveTemplate: false, excludes: ["exerciseTypes"]]) {
+	//	json tmpl.'/exerciseType/exerciseType'(exerciseTypes: exercise.exerciseTypes)
+	exerciseTypes tmpl.'/exerciseType/exerciseType'( exercise.exerciseTypes )
+	/*exerciseTypes {
+		exercise.exerciseTypes.each { exerciseType ->
+			id exerciseType.id
+			shortName exerciseType.shortName
+			targetArea exerciseType.targetArea
+		}
+	}*/
+}
