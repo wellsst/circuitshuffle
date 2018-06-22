@@ -18,20 +18,26 @@ export class AddRepsComponent implements OnInit {
     Validators.required
   ]);
 
-  formGroup: FormGroup;
+  rep = {
+    completedOn: new Date(),
+    reps: 10,
+    exercise: null,
+    timeTakenSecs: 60
+  }
+  //formGroup: FormGroup;
 
   exerciseList: any
 
-  constructor(private fb: FormBuilder,
+  constructor(/*private fb: FormBuilder,*/
               private historyService: HistoryService,
               private exerciseService: ExerciseLookupService,
               public snackBar: MatSnackBar) {
-    this.formGroup = this.fb.group({
+    /*this.formGroup = this.fb.group({
       completedOn: new Date(),
       reps: [10, [Validators.min(2), Validators.max(100)]],
       timeTakenSecs: [60, [Validators.min(4), Validators.max(1000)]],
-      exercise: null //this.options[0]
-    })
+      exercise: new Exercise()
+    })*/
   }
 
   filteredOptions: Observable<Exercise[]>;
@@ -57,7 +63,7 @@ export class AddRepsComponent implements OnInit {
 
   filter(name: string): Exercise[] {
     return this.exerciseList.filter(exercise =>
-      exercise.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+      exercise.name.toLowerCase().includes(name.toLowerCase())); //indexOf(name.toLowerCase()) === 0);
   }
 
   displayFn(exercise?: Exercise): string | undefined {
@@ -66,7 +72,8 @@ export class AddRepsComponent implements OnInit {
 
   saveAddReps() {
     // ok example of post with service: https://stackoverflow.com/questions/43938598/angular-formgroup-display-json-errors-from-server-rest-api
-    let value = this.formGroup.value;
+    //let value = this.formGroup.value;
+    let value = this.rep
     console.log(value)
     let history = new ExerciseHistory()
     history.completedOn = value.completedOn
@@ -78,12 +85,16 @@ export class AddRepsComponent implements OnInit {
         // refresh the list
         this.snackBar.open(`${value.reps} ${value.exercise.name}'s saved, well done!`,
           '', {
-            duration: 3000,
+            duration: 5000,
           });
         return true;
       },
       error => {
-        console.error("Error saving exercise rep: " + error);
+        console.error("Error saving exercise rep: " + error.message);
+        this.snackBar.open(`Could not save: ${error.message}`,
+          '', {
+            duration: 10000,
+          });
         return observableThrowError(error);
       }
     )

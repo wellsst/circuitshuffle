@@ -23,10 +23,10 @@
 
             <mat-form-field class="example-full-width">
               <input type="text" placeholder="Exercise" aria-label="Exercise" matInput
-                     [matAutocomplete]="auto" [ngModel]="suit.selectedExercise">
+                     [matAutocomplete]="auto" [ngModel]="suit.selectedExercise" >
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredExercises | async" [value]="option">
-                  {{ option.name }}
+                <mat-option *ngFor="let exercise of filteredExercises | async" [value]="exercise">
+                  {{ exercise.name }}
                 </mat-option>
               </mat-autocomplete>
 

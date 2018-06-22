@@ -87,7 +87,7 @@ war {
     version = project.version // + '.' + System.currentTimeMillis();   // I simply prefer to append a ms timestamp in case I've run multiple builds
 
     // Finally, include the files from the client:
-    from('../client/dist') {
+    from("../client/dist/${baseName}") {
         include '**/*'
         //into('WEB-INF')
     }

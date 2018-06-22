@@ -44,6 +44,7 @@ export class Message {
 
 }
 
+
 export const SHORT_MSGS = [
     {id: 1, summary: "Go go go"},
     {id: 2, summary: "Push"},

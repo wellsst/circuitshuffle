@@ -113,13 +113,6 @@ export class StartCircuitComponent implements OnInit {
     )
   }
 
-  getRandomExercise(excludeList) {
-    //return this.http.get("http://localhost:5050/randomExercise/"
-    let listLength = this.exerciseList.length - excludeList.length
-    return _.difference(this.exerciseList, excludeList)[Math.floor(Math.random() * listLength)]
-
-    //return this.exerciseList[Math.floor(Math.random() * this.exerciseList.length)]
-  }
 
   filter(name: string): Exercise[] {
     return this.exerciseList.filter(exercise =>
@@ -325,6 +318,14 @@ export class StartCircuitComponent implements OnInit {
 
   randomExercise(suit) {
     suit.selectedExercise = this.getRandomExercise([]);
+  }
+
+  getRandomExercise(excludeList) {
+    //return this.http.get("http://localhost:5050/randomExercise/"
+    let listLength = this.exerciseList.length - excludeList.length
+    return _.difference(this.exerciseList, excludeList)[Math.floor(Math.random() * listLength)]
+
+    //return this.exerciseList[Math.floor(Math.random() * this.exerciseList.length)]
   }
 
   clearExercise(suit) {
