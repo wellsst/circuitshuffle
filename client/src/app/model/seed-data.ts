@@ -1,7 +1,5 @@
 import {HistoricalCategory, Exercise, ExerciseType, SuitType} from './model'
 
-import {Message} from 'primeng/api';
-
 const today: HistoricalCategory = {id: 1, name: "Today"}
 const yesterday: HistoricalCategory = {id: 2, name: "Yesterday"}
 
@@ -40,7 +38,13 @@ export const SUIT_TYPES: SuitType[] = [
     //{id: 5, name: "Wildcard", selectedExercise: EXERCISE_LIST[4]},
 ]
 
-export const SHORT_MSGS: Message[] = [
+export class Message {
+  id: number
+  summary: string
+
+}
+
+export const SHORT_MSGS = [
     {id: 1, summary: "Go go go"},
     {id: 2, summary: "Push"},
     {id: 3, summary: "No slacking"},
