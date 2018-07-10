@@ -103,14 +103,20 @@ export class StartCircuitComponent implements OnInit {
       data => {
         this.exerciseList = data
 
-        for (let suit of this.suits) {
+        this.suits.forEach( suit => {
+
+          }
+        )
+
+        //for (let suit of this.suits) {
+        this.suits.forEach( suit => {
           suit.filteredExercises = suit.circuitSetupControl.valueChanges
             .pipe(
               startWith<string | Exercise>(''),
-              map(value => typeof value === 'string' ? value : value.name),
-              map(name => name ? this.filter(name) : this.exerciseList.slice())
+              map(value => typeof value === 'string' ? value : (value as Exercise).name as string),
+              map(name => name ? this.filter(name as string) : this.exerciseList.slice())
             );
-        }
+        })
         /*this.filteredExercises[0] = this.circuitSetupControls[0].valueChanges
           .pipe(
             startWith<string | Exercise>(''),
