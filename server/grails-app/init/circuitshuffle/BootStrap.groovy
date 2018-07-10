@@ -13,6 +13,7 @@ class BootStrap {
 
         Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
         User user = User.findOrSaveByUsernameAndPassword("swellz@pm.me", "123qwe")
+        user.save([flush: true])
         UserRole.create(user, userRole, true)
 
        // Role userRole2 = Role.findOrSaveByAuthority("ROLE_USER")
