@@ -65,7 +65,8 @@ SEDENTARY BEHAVIOUR
 * Fix reps meter 
 * Fix accumulation of reps when saving a history item
 
--- Rel v19: 
+-- Rel v19 (fail on Bootstrap), v20, :
+ 
 
 -- Earlier rel's
 * Wildcards are set to 2 reps it seems?  Make them not for a suit - create a new suit for these

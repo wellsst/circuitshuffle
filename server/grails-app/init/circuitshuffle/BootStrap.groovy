@@ -11,10 +11,10 @@ class BootStrap {
        /* UserOld user = User.findOrSaveByUsernameAndPassword("steve")
         UserOld testUser = User.findOrSaveByUsername("test")*/
 
-        Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
+       /* Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
         User user = User.findOrSaveByUsernameAndPassword("swellz@pm.me", "123qwe")
         user.save([flush: true])
-        UserRole.create(user, userRole, true)
+        UserRole.create(user, userRole, true)*/
 
        // Role userRole2 = Role.findOrSaveByAuthority("ROLE_USER")
         /*User user2 = User.findOrSaveByUsernameAndPassword("steve", "123qwe")
