@@ -12,3 +12,12 @@ environments {
     }
 }
 
+jasypt {
+    algorithm = "PBEWITHSHA256AND256BITAES-CBC-BC"
+    // algorithm = "PBEWITHMD5ANDDES"
+    providerName = "BC"
+    password = "65ScanHull37thStatueFuseSq"
+    keyObtentionIterations = 1000
+}
+
+

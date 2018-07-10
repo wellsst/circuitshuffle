@@ -46,7 +46,6 @@ export class StartCircuitComponent implements OnInit {
   minReps = 4
   maxReps = 10
 
-
   filteredExercises: Observable<Exercise[]>;
 
   exerciseList: any
@@ -73,18 +72,21 @@ export class StartCircuitComponent implements OnInit {
   allowWildcards = true
 
   circuitSetupControl = new FormControl();
+  circuitSetupControls = [];
 
   constructor(private exerciseService: ExerciseLookupService,
               private historyService: HistoryService,
               public snackBar: MatSnackBar,
               public dialog: MatDialog) {
 
+    for (let suit of this.suits) {
+      suit.circuitSetupControl = new FormControl()
+    }
   }
 
   ngOnInit() {
     this.timer = TimerObservable.create(1000, this.period);
-    this.subscription = this.timer.
-    subscribe(t => {
+    this.subscription = this.timer.subscribe(t => {
       this.repSecs += (this.period / 1000)
       this.totalSecs += (this.period / 1000)
       this.tick = t;
@@ -97,16 +99,25 @@ export class StartCircuitComponent implements OnInit {
       this.secs = t % 60*/
     });
 
-
     this.exerciseList = this.exerciseService.getList().subscribe(
       data => {
         this.exerciseList = data
-        this.filteredExercises = this.circuitSetupControl.valueChanges
+
+        for (let suit of this.suits) {
+          suit.filteredExercises = suit.circuitSetupControl.valueChanges
+            .pipe(
+              startWith<string | Exercise>(''),
+              map(value => typeof value === 'string' ? value : value.name),
+              map(name => name ? this.filter(name) : this.exerciseList.slice())
+            );
+        }
+        /*this.filteredExercises[0] = this.circuitSetupControls[0].valueChanges
           .pipe(
             startWith<string | Exercise>(''),
             map(value => typeof value === 'string' ? value : value.name),
             map(name => name ? this.filter(name) : this.exerciseList.slice())
           );
+        */
       },
       err => console.error(err),
       () => console.log('done loading exercise list: ' + this.exerciseList.length)
@@ -255,18 +266,15 @@ export class StartCircuitComponent implements OnInit {
       this.setsCompleted += 1
 
       let history = this.circuitHistory.get(this.currentRep.suit.id)
-      history.reps += this.currentRep.reps
+      history.reps = this.currentRep.reps
       let timeTaken = moment()
       history.timeTakenSecs = timeTaken.diff(this.repStartOn, 'seconds')
       history.completedOn = new Date()
       this.historyService.addHistory(history).subscribe(
         data => {
-          // refresh the list
-          //this.getFoods();
           return true;
         },
         error => {
-          //console.error("Error saving exercise rep: " + error);
           return observableThrowError(error);
         }
       )
@@ -304,7 +312,7 @@ export class StartCircuitComponent implements OnInit {
 
   clearExercises() {
     for (let suit of this.suits) {
-      suit.selectedExercise = null
+      this.clearExercise(suit)
     }
   }
 
@@ -329,7 +337,7 @@ export class StartCircuitComponent implements OnInit {
   }
 
   clearExercise(suit) {
-    suit.selectedExercise = null
+    suit.selectedExercise = new Exercise()
   }
 
 

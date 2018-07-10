@@ -33,7 +33,7 @@ SEDENTARY BEHAVIOUR
 * Voice - say the name of the exercise or motiviation as well
 * Goals and how much are met - A user setting to save to DB
 * Partner/group workouts?
-* User signup - WIP
+* Put grails plugin jasypt config in ext files: http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption
 * Better auth maybe: 
     * http://mherman.org/blog/2018/04/17/authentication-in-angular-with-ngrx/#.WuESstNuZQM
     * http://www.devglan.com/spring-security/angular-jwt-authentication
@@ -43,16 +43,31 @@ SEDENTARY BEHAVIOUR
 * Warmups/cooldowns -  Add perhaps as just a suggestion
 * Saved exercise sets/favourites - UI Change
 * Images of the suits
+* Improve content on landing page
+* Signup
+* forgotten pass
+* Fix LookupData to not include description in the findOrSave
 
+## WIP
+* User signup - WIP
 
 ## Add as exercises
 
-* https://www.healthline.com/health/fitness-exercise/flutter-kicks
-* https://gmb.io/crow-pose
-
-
 ## Done
 
+-- To be reld
+* Encrypt password - http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption (deploy notes:https://stackoverflow.com/questions/14552303/opensslcipherciphererror-with-rails4-on-jruby)
+* logout
+* Add exercise: https://www.healthline.com/health/fitness-exercise/flutter-kicks
+* Add exercise: https://gmb.io/crow-pose
+* Fix some lookup data - PostgreSQL does not like spaces when querying
+* Fixed start circuit auto-comp filter
+* Fix reps meter 
+* Fix accumulation of reps when saving a history item
+
+-- Rel v19: 
+
+-- Earlier rel's
 * Wildcards are set to 2 reps it seems?  Make them not for a suit - create a new suit for these
 * Sort the summary boxes
 * Feedback when you add a manual entry

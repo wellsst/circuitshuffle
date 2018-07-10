@@ -19,7 +19,7 @@ class LookupData {
         def etObliqs = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Obliques", "Obliques", "muscles on the side of the torso, next to the abdominals")
         def etIntercosts = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Intercostals", "Intercostals", "diagonal muscles across the ribs, just above the abdominals")
         def etSerratus = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Serratus", "Serratus", "diagonal muscles slightly above the intercostals, near the pectorals")
-        def etAbs = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Abdominals", "Abs", " muscles extending the length of the abdomen")
+        def etAbs = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Abdominals", "Abs", "muscles extending the length of the abdomen")
         def etFfs = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Forearm flexors", "Forearm flexors", "muscles of the inside of the forearm")
         def etFes = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Forearm extensors", "Forearm extensors", "muscles of the outside of the forearm")
         def etHams = ExerciseType.findOrSaveByTargetAreaAndShortNameAndDescription("Hamstrings", "Hammies", "muscles that extend from the back of the thigh to the lower leg")
@@ -164,6 +164,22 @@ class LookupData {
                 addToExerciseTypes(etGluts).addToExerciseTypes(etSpinal).addToExerciseTypes(etCore).
                 addToExerciseTypes(etTraps).addToExerciseTypes(etShoulder)
 
+        def crow = Exercise.findOrSaveWhere(name: "Crow pose").
+                addToExerciseTypes(etSpinal).addToExerciseTypes(etCore).
+                addToExerciseTypes(etTraps).addToExerciseTypes(etShoulder).
+                addToExerciseTypes(etFes).addToExerciseTypes(etFfs)
+        crow.description= """https://gmb.io/crow-pose/
+
+Sit down on your knees.
+Make a diamond with your hands.
+Move your hands out, until they are shoulder width apart, maintaining the diamond shape.
+Bend your elbows.
+Flare your knees out to put them on your arms, just above the elbows.
+Keep strong tension at your elbows for a stable base.
+Lean your head and shoulders forward over your hands to find that crucial balance point.
+Try rocking forward and back to find where that point is for you.
+"""
+
         /* JUMPS */
         Exercise.findOrSaveWhere(name: "Running", description: "Run/high knees on the spot for at least 20 secs per rep").
                 addToExerciseTypes(etSols).addToExerciseTypes(etGas).
@@ -186,8 +202,8 @@ class LookupData {
                 addToExerciseTypes(etCardio).addToExerciseTypes(etGluts)
 
         Exercise.findOrSaveWhere(name: "Overhead Squats / thrusts", description: "Perform a squat while holding an object, such as a weighted backpack, overhead. The top of your thighs should be parallel to the ground in the bottom position.\n" +
-                "Your feet should be shoulder-width apart with your toes\n" +
-                "pointing outward no more than thirty degrees. Your heels\n" +
+                "Your feet should be shoulder-width apart with your toes " +
+                "pointing outward no more than thirty degrees. Your heels " +
                 "should remain on the ground, and your knees should point in the same direction as your index toe").
                 addToExerciseTypes(etSols).addToExerciseTypes(etGas).addToExerciseTypes(etShoulder).
                 addToExerciseTypes(etCardio).addToExerciseTypes(etGluts).addToExerciseTypes(etHipFlexs).addToExerciseTypes(etSpinal)
@@ -232,6 +248,27 @@ bend your knees so that your thighs are perpendicular to the ground, and cross y
         Exercise.findOrSaveWhere(name: "Flutter Kicks", description: """(1 rep is left and right kick) Lie down on your back with your hands under your butt and your head up. Keeping your legs straight and together, lift your feet into the air, six-inches from the ground.""").
                 addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
                 addToExerciseTypes(etAbs)
+
+        def flCC = Exercise.findOrCreateWhere(name: "Flutter Kicks - Criss-cross").
+                addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
+                addToExerciseTypes(etAbs)
+        flCC.description = """Lie down on your back, facing up.
+Place both hands underneath your buttocks.
+Keep your lower back on the ground as you lift both legs up, slightly past hip height, keeping your core engaged the entire time.
+Criss-cross your legs over one another, switching off which leg is on top, and keeping your legs off the ground the entire time.
+For more of a challenge, lift your head and neck off the floor.
+The wider you bring out your legs with each cross, the more you’ll feel the exercise in your ab muscles.
+"""
+        flCC.save()
+
+        def flProne = Exercise.findOrCreateWhere(name: "Flutter Kicks - Prone").
+                addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
+                addToExerciseTypes(etAbs)
+        flProne.description = """Lie on your stomach and place your elbows out wide and your hands together in front of your face. Rest your chin or forehead on your hands.
+Engage your core, and lift both legs off the ground to hip height or slightly past hip height, if possible.
+Lift one leg and then the other in a flutter motion, as if you were swimming.
+"""
+        flProne.save()
 
         Exercise.findOrSaveWhere(name: "Bear crawls", description: "(reps x2 of asked for, so for x10 you do 20 (left and right crawl is 1 rep!))Down on all fours, legs and arms straight or bent whatever feels right to you.  Left arm and right leg forward, then vica versa").
                 addToExerciseTypes(etCore).addToExerciseTypes(etShoulder).addToExerciseTypes(etQuads).

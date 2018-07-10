@@ -31,10 +31,10 @@ export const EXERCISE_LIST: Exercise[] = [
     //{id: 5, name: "Wildcard", selectedExercise: EXERCISE_LIST[4]},
 ]*/
 export const SUIT_TYPES: SuitType[] = [
-    {id: 1, name: "Clubs", wilcardAllocated: false},
-    {id: 2, name: "Spades", wilcardAllocated: false},
-    {id: 3, name: "Hearts", wilcardAllocated: false},
-    {id: 4, name: "Diamonds", wilcardAllocated: false},
+    {id: 1, name: "Clubs", wilcardAllocated: false, iconName: "clubs"},
+    {id: 2, name: "Spades", wilcardAllocated: false, iconName: "spades"},
+    {id: 3, name: "Hearts", wilcardAllocated: false, iconName: "hearts"},
+    {id: 4, name: "Diamonds", wilcardAllocated: false, iconName: "diams"},
     //{id: 5, name: "Wildcard", selectedExercise: EXERCISE_LIST[4]},
 ]
 

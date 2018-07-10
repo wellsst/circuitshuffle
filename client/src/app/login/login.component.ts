@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
         if (result === true) {
           // login successful
           console.log("Login ok user is: " + this.authenticationService.username)
-          this.router.navigate(['/']);
+          this.router.navigate(['/view-history']);
         }
       }, error => {
         this.loading = false;

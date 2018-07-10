@@ -29,7 +29,7 @@ import {
   MatSnackBarModule,
   MatCheckboxModule,
   MatProgressBarModule,
-  MatDialogModule
+  MatDialogModule, MatBadgeModule,
 
 } from '@angular/material';
 import {MyNavComponent} from './my-nav/my-nav.component';
@@ -52,11 +52,13 @@ import {AuthGuard} from "./guards/auth.guard";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {SignupComponent} from "./signup/signup.component";
+import { LogoutComponent } from './logout/logout.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: WelcomeComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'view-history', component: ViewHistoryComponent, canActivate: [AuthGuard]},
   {path: 'exercise-list', component: ExerciseListComponent},
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
     ViewHistoryComponent,
     TimerComponent,
     SecsAsTimePipe,
-    QuitPromptComponent
+    QuitPromptComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatProgressBarModule,
     MatDialogModule,
+    MatIconModule,
+    MatBadgeModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

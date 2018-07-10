@@ -1,55 +1,58 @@
-
-
 export class HistoricalCategory {
-    id: number
-    name: String
+  id: number
+  name: String
 
 }
 
 export class User {
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export class SuitType {
-    id: number
-    name: String // clubs, hearts
-    selectedExercise?: Exercise
-    selectRandomExercise?: boolean = false
-    wilcardAllocated?: boolean = false
+  id: number
+  name: String // clubs, hearts
+  selectedExercise?: Exercise
+  selectRandomExercise?: boolean = false
+  wilcardAllocated?: boolean = false
+  // ui
+  circuitSetupControl?: any
+  filteredExercises?: any
+  iconName?: String
 }
 
 export class ExerciseRepetition {
-    id: number
-    name: String
-    exercise: Exercise //what will the user do
-    reps: number
-    isWildcard?: boolean = false
-    suit: SuitType
+  id: number
+  name: String
+  exercise: Exercise //what will the user do
+  reps: number
+  isWildcard?: boolean = false
+  suit: SuitType
 }
 
 export class ExerciseType {
-    id: number
-    shortName: String // eg Cardio, Biceps
+  id: number
+  shortName: String // eg Cardio, Biceps
 }
 
 export class Exercise {
-    id: number
-    name: string
-    description: String
-    exerciseTypes: ExerciseType[]
+  id: number
+  name: string
+  description: String
+  exerciseTypes: ExerciseType[]
 }
 
 export class ExerciseHistory {
-    id: number
+  id: number
 
-    completedOn: Date
-    exercise: Exercise
-    reps: number
-    timeTakenSecs: number
+  completedOn: Date
+  exercise: Exercise
+  reps: number
+  timeTakenSecs: number
 }
+
 /*
 export class Message {
     id: number
@@ -57,7 +60,7 @@ export class Message {
 }*/
 
 export class Prefs {
-    id: number
-    name: String
+  id: number
+  name: String
 
 }

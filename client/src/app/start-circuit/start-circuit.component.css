@@ -8,3 +8,16 @@
   align-items: center;
   justify-content: space-around;
 }
+
+.clubs {
+  color: black;
+}
+.spades {
+  color: darkblue;
+}
+.diams {
+  color: deeppink;
+}
+.hearts {
+  color: red;
+}

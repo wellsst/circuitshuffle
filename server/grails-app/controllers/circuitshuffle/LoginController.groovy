@@ -41,9 +41,9 @@ class LoginController {
         String password = request.JSON.password
         log.info( "Login attempt: ${request.JSON}")
 
-        def user = User.findByUsernameAndPassword(username, password)
-        //def user = User.findByUsername(username)
-        if (user) {
+        // def user = User.findByUsernameAndPassword(username, password)
+        def user = User.findByUsername(username)
+        if (user && (user.password == password)) {
             def token = UUID.randomUUID().toString()
             // todo: create a real full JWT token
             user.token = token

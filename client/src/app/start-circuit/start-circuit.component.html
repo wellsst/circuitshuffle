@@ -14,18 +14,24 @@
     </mat-card-header>
     <mat-card-content>
 
-      <div fxLayout="row wrap" fxLayout.xs="column wrap" fxLayoutGap="25px">
-        <mat-card *ngFor="let suit of suits" fxFlex="calc(50% - 25px)">
+      <div fxLayout="row wrap" fxLayout.xs="column wrap" fxLayoutGap="15px">
+        <mat-card *ngFor="let suit of suits; let i = index" fxFlex="calc(50% - 15px)">
           <mat-card-header>
-            <mat-card-title>{{suit.name}}</mat-card-title>
+            <mat-card-title>
+              <div class="{{suit.iconName}}">
+                {{suit.name}}
+                <div [innerHTML]="'&' + suit.iconName + ';'"></div>
+              </div>
+            </mat-card-title>
           </mat-card-header>
           <mat-card-content>
 
             <mat-form-field class="example-full-width">
               <input type="text" placeholder="Exercise" aria-label="Exercise" matInput
-                     [matAutocomplete]="auto" [ngModel]="suit.selectedExercise" >
+                     [matAutocomplete]="auto" [ngModel]="suit.selectedExercise"
+                     [formControl]="suit.circuitSetupControl">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let exercise of filteredExercises | async" [value]="exercise">
+                <mat-option *ngFor="let exercise of suit.filteredExercises | async" [value]="exercise">
                   {{ exercise.name }}
                 </mat-option>
               </mat-autocomplete>
@@ -139,7 +145,10 @@
         <div class="ui-g-12">
           <div class="ui-g-12" *ngIf="!currentRep?.isWildcard;else wildcard_content">
             <!--<h4>{{currentRep?.exercise.description}}</h4>-->
-            <h3>{{currentRep.suit.name}}</h3>
+            <h3 class="{{currentRep.suit.iconName}}">
+              {{currentRep.suit.name}}
+              <div [innerHTML]="'&' + currentRep.suit.iconName + ';'"></div>
+            </h3>
           </div>
           <ng-template #wildcard_content>
             <div>Wildcard!</div>
@@ -155,22 +164,22 @@
 
         <div fxLayout="row" fxLayoutAlign="start start">
           <div>
-            <h4>
+            <h3>
               Rep time:
               <!--<app-timer #repTimer [totalSeconds]="repSecs"></app-timer>-->
               {{ repSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
-            </h4>
+            </h3>
           </div>
 
           <div>
-            <h4>Total time:
+            <h3>Total time:
               <!--<app-timer [totalSeconds]="totalSecs"></app-timer>-->
               {{ totalSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
-            </h4>
+            </h3>
           </div>
 
         </div>
-        <div>Reps meter: {{((repsCompleted / totalReps)*100).toFixed(0)}} / {{ totalReps}}</div>
+        <div>Reps meter: {{repsCompleted}} / {{ totalReps}} ({{((repsCompleted / totalReps)*100).toFixed(0)}}%)</div>
         <mat-progress-bar mode="buffer"
                           [value]="((repsCompleted / totalReps)*100).toFixed(0)"
                           [bufferValue]="currentRep.reps"></mat-progress-bar>

@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
   <mat-sidenav
-    #drawer #sidenav
+    #sidenav
     (keydown.escape)="close('escape')" disableClose
     class="sidenav"
     fixedInViewport="true"
@@ -16,9 +16,9 @@
     </mat-toolbar>
     <mat-nav-list>
       <mat-list>
-        <a mat-list-item>
+        <a mat-list-item routerLink="/logout">
           <mat-icon class="icon">input</mat-icon>
-          <span class="label">Login</span>
+          <span class="label">Logout</span>
         </a>
         <a mat-list-item
            routerLink="/">

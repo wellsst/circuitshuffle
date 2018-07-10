@@ -1,6 +1,7 @@
 package circuitshuffle.auth
 
 import circuitshuffle.ExerciseHistory
+import com.bloomhealthco.jasypt.GormEncryptedStringType
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
@@ -35,6 +36,6 @@ class User implements Serializable {
 
     static mapping = {
         table 'uzer'
-	    password column: '`password`'
+	    password column: '`password`', type: GormEncryptedStringType
     }
 }
