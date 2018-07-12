@@ -42,20 +42,27 @@ SEDENTARY BEHAVIOUR
 
 * Warmups/cooldowns -  Add perhaps as just a suggestion
 * Saved exercise sets/favourites - UI Change
-* Images of the suits
 * Improve content on landing page
 * Signup
 * forgotten pass
 * Fix LookupData to not include description in the findOrSave
+* Scheduled reminders to get moving and weekly/monthly report
 
 ## WIP
-* User signup - WIP
+* Change password
 
 ## Add as exercises
 
 ## Done
 
 -- To be reld
+
+
+-- v22
+* User signup
+
+-- Rel v19 (fail on Bootstrap), v20, v21:
+
 * Encrypt password - http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption (deploy notes:https://stackoverflow.com/questions/14552303/opensslcipherciphererror-with-rails4-on-jruby)
 * logout
 * Add exercise: https://www.healthline.com/health/fitness-exercise/flutter-kicks
@@ -64,9 +71,7 @@ SEDENTARY BEHAVIOUR
 * Fixed start circuit auto-comp filter
 * Fix reps meter 
 * Fix accumulation of reps when saving a history item
-
--- Rel v19 (fail on Bootstrap), v20, :
- 
+* Images of the suits 
 
 -- Earlier rel's
 * Wildcards are set to 2 reps it seems?  Make them not for a suit - create a new suit for these

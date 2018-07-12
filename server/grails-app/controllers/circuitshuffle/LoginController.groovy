@@ -1,6 +1,9 @@
 package circuitshuffle
 
+import circuitshuffle.auth.Role
 import circuitshuffle.auth.User
+import circuitshuffle.auth.UserRole
+import org.apache.commons.lang.WordUtils
 import org.springframework.http.HttpStatus
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
@@ -9,6 +12,7 @@ class LoginController {
 	static responseFormats = ['json', 'xml']
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def mailService
 
     def index() { }
 
@@ -57,7 +61,71 @@ class LoginController {
             render text: "User login attempt ${username}, but user not found or password invalid", status: HttpStatus.UNAUTHORIZED
         }
     }
-    def signup(String emailAddress) {
+
+    def signup() {
+        String emailAddress = request.JSON.emailAddress
         log.info "Signup request from user: ${emailAddress}"
+
+        User user = User.findByUsername(emailAddress)
+        if (user) {
+            render text: "User already exists, try just logging in.", status: HttpStatus.IM_USED
+        } else {
+            def wordMap = servletContext["wordMap"]
+            String password = generatePassphrase(wordMap)[0]
+
+            User newUser = new User(username: emailAddress, password: password)
+            newUser.save(flush: true)
+            Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
+            UserRole.create(newUser, userRole, true)
+
+            mailService.sendMail {
+                to emailAddress
+                from "websystemz@gmail.com"
+                subject "Hello from CircuitShuffle"
+                // html view: "/emails/html-hello", model: [param1: "value1", param2: "value2"]
+                html """
+<p>Congrats!  You have signed-up to CircuitShuffle, your password is: <b>${password}</b><p>
+    <p></p>
+    <p>We suggest changing this password ASAP</p>
+    <p></p>
+    <p><a href='${grailsApplication.config.grails.serverURL}/login'>Login:  using your email address</a></p>
+    <p></p>
+    <p>Happy shuffling!</p>
+    <p></p>
+    <p>The CircuitShuffle team</p>
+    
+"""
+            }
+
+            Map response = [username: emailAddress, password:password]
+            respond response
+        }
+       
+    }
+
+    private static List generatePassphrase(def wordMap, int nrPhrases = 1, int nrWords = 3) {
+        List<String> phraseList = []
+        (1..nrPhrases).each {
+            String phrase = ""
+            (1..nrWords).eachWithIndex { attempt, index ->
+                String rollKey = ""
+                (1..5).each { roll ->
+                    rollKey += new Random().nextInt(6) + 1
+                }
+
+                //println "   Rolled: ${rollKey}"
+                String word = wordMap[rollKey]
+
+                if (index >= 1) {
+                    word = WordUtils.capitalize(word)
+                }
+
+                //println "   Word: ${word}"
+                phrase += word
+            }
+            log.warn "Gen: ${phrase}"
+            phraseList << phrase
+        }
+        phraseList
     }
 }

@@ -21,9 +21,7 @@ export class SignupComponent implements OnInit {
     }
 
     signup() {
-
         this.loading = true;
-        console.log("Logging in")
         this.authenticationService.signup(this.model.username)
             .subscribe(result => {
                 if (result === true) {
@@ -33,6 +31,7 @@ export class SignupComponent implements OnInit {
                 } else {
                     // login failed
                     this.error = 'Username or password is incorrect';
+                    //console.log(this.authenticationService.error)
                     this.loading = false;
                 }
             });

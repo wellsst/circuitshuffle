@@ -20,6 +20,7 @@ const httpOptions = {
 export class AuthService {
     public token: string;
     public username: string;
+    public error: string;
 
     constructor(private http: HttpClient) {
         // set token if saved in local storage
@@ -99,7 +100,7 @@ export class AuthService {
 
 
     signup(emailAddress: string): Observable<boolean> {
-        return this.http.post(environment.serverUrl + '/signup/',
+        return this.http.post(environment.serverUrl + '/signup',
             JSON.stringify({emailAddress: emailAddress}), httpOptions).pipe(
             map((response: any) => {
                 // login successful if there's a jwt token in the response
@@ -117,6 +118,7 @@ export class AuthService {
                     return true;
                 } else {
                     // return false to indicate failed login
+                  this.error = response
                     return false;
                 }
             }));

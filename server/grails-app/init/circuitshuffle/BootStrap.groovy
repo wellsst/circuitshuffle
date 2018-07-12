@@ -6,8 +6,25 @@ import circuitshuffle.auth.UserRole
 
 class BootStrap {
 
-    def init = { servletContext ->
+    //def mailService
 
+    def init = { servletContext ->
+        Map<String, String> wordMap = [:]
+        servletContext.getResourceAsStream('diceware.wordlist.asc.txt').text.eachLine { line ->
+            List fields = line.tokenize()
+            wordMap.put(fields[0], fields[1])
+        }
+
+        servletContext.setAttribute("wordMap", wordMap)
+
+
+        /*mailService.sendMail {
+            to "wellsst@gmail.com"
+            from "websystemz@gmail.com"
+            subject "Hello from CS"
+            html "<b>Hello</b> World"
+        }
+*/
        /* UserOld user = User.findOrSaveByUsernameAndPassword("steve")
         UserOld testUser = User.findOrSaveByUsername("test")*/
 

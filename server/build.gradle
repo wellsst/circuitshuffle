@@ -61,6 +61,7 @@ dependencies {
     compile 'com.github.jsimone:webapp-runner:8.5.11.3'
     provided "org.springframework.boot:spring-boot-starter-tomcat"
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    compile 'org.grails.plugins:mail:2.0.0'
 }
 
 bootRun {

@@ -15,5 +15,7 @@ interface ExerciseService {
 
     Exercise save(Exercise exercise)
 
+
+
    // List<Exercise> search(String partialName)
 }
