@@ -47,6 +47,7 @@ SEDENTARY BEHAVIOUR
 * Scheduled reminders to get moving and weekly/monthly report
 
 ## WIP
+* Display logged in as username  (needs alignment)
 * Change password
 * Doing circuit move next buttons row to up top so it doesnt move each time
 
@@ -54,13 +55,18 @@ SEDENTARY BEHAVIOUR
 
 ## Done
 
--- To be reld
+#### To be reld
+
+#### v24
+* Display logged in as username
+
+####  v23
 * Ensure only the users history can be seen!
 * User signup - feedback with message.  
 * User signup - Log them in right away
 * Improve content on landing page
 
--- v22
+#### v22
 * User signup - note needed to allow  accessing gmail accounts signin from externals (heroku): https://accounts.google.com/DisplayUnlockCaptcha
 
 -- Rel v19 (fail on Bootstrap), v20, v21:

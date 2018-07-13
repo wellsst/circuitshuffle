@@ -125,4 +125,8 @@ export class AuthService {
     this.token = null;
     localStorage.removeItem('currentUser');
   }
+
+  isLoggedIn(): boolean {
+    return this.token != null
+  }
 }

@@ -53,6 +53,9 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {SignupComponent} from "./signup/signup.component";
 import { LogoutComponent } from './logout/logout.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 const appRoutes: Routes = [
@@ -85,7 +88,10 @@ const appRoutes: Routes = [
     TimerComponent,
     SecsAsTimePipe,
     QuitPromptComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserInfoComponent,
+    ForgottenPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
