@@ -42,24 +42,26 @@ SEDENTARY BEHAVIOUR
 
 * Warmups/cooldowns -  Add perhaps as just a suggestion
 * Saved exercise sets/favourites - UI Change
-* Improve content on landing page
-* Signup
 * forgotten pass
 * Fix LookupData to not include description in the findOrSave
 * Scheduled reminders to get moving and weekly/monthly report
 
 ## WIP
 * Change password
+* Doing circuit move next buttons row to up top so it doesnt move each time
 
 ## Add as exercises
 
 ## Done
 
 -- To be reld
-
+* Ensure only the users history can be seen!
+* User signup - feedback with message.  
+* User signup - Log them in right away
+* Improve content on landing page
 
 -- v22
-* User signup
+* User signup - note needed to allow  accessing gmail accounts signin from externals (heroku): https://accounts.google.com/DisplayUnlockCaptcha
 
 -- Rel v19 (fail on Bootstrap), v20, v21:
 

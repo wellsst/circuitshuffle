@@ -29,15 +29,15 @@ class ExerciseHistoryController { //extends RestfulController<ExerciseHistory> {
 
     def index(Integer max) {
         // println " ********** ${exerciseHistoryService.list()}"
-        /*def token = request.getHeader("token")
-        log.info "User getting history: ${ token}"
-        User user = User.findByToken(token)
+        def userName = request.getHeader("token")
+        log.info "User getting history: ${ userName}"
+        /*User user = User.findByToken(token)
         if (!user) {
             render status: NOT_FOUND
             return
         }*/
         try {
-            String userName = "swellz@pm.me"
+            //String userName = "swellz@pm.me"
             //User user = checkPermissions(request.getHeader("token"))
             User user = checkPermissions(userName)
             log.info "${user}"

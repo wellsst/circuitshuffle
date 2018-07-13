@@ -1,28 +1,40 @@
-<div style="text-align:center">
-  <p>
-    This is a platform for ....
-    <br> Click on Login to get Started!!!
-  </p>
 
-  <mat-card class="card-demo">
-    <mat-card-title>Basic Responsive Grid App</mat-card-title>
-    <mat-card-content class="containerX">
-      <div class="colorNested box" style="height: auto;">
-        <div gdAreas.xs="header | sidebar | content | sidebar2 | footer" gdGap="1em"
-             gdColumns.xs="none"
-             gdAreas.sm="header header | sidebar content | sidebar2 sidebar2 | footer footer"
-             gdColumns.sm="20%!"
-             gdAreas.gt-sm="header header header | sidebar content sidebar2 | footer footer footer"
-             gdColumns.gt-sm="120px auto 120px" gdGap.gt-sm="20px" [ngStyle]="{'max-width': 'auto'}"
-             [ngStyle.gt-sm]="{'max-width': '600px'}">
-          <div class="blocks one" gdArea="header">Header</div>
-          <div class="blocks two" gdArea="sidebar">Sidebar</div>
-          <div class="blocks three" gdArea="sidebar2">Sidebar 2</div>
-          <div class="blocks four" gdArea="content">Content
-            <br /> More content than we had before so this column is now quite tall.</div>
-          <div class="blocks five" gdArea="footer">Footer</div>
-        </div>
-      </div>
+
+  <mat-card>
+    <mat-card-title>What is CircuitShuffle?</mat-card-title>
+    <mat-card-content>
+      <p>CircuitShuffle is a essentially a simple personal trainer.</p>
+
+      <p> It focuses on assigning (mostly) bodyweight exercises to you. You control how many and what you want to
+        do.</p>
+
+      <p> It keeps track of what you've acheived.</p>
+
+      <p> Reasons for being active:</p>
+
+      <ul>
+        <li>Doing any physical activity is better than doing none. If you currently do no physical
+          activity, start by doing some, and gradually build up to the recommended amount.
+        </li>
+
+        <li>Be active on most, preferably all, days every week.</li>
+
+        <li>Accumulate 150 to 300 minutes (2 ½ to 5 hours) of moderate intensity physical activity or
+          75 to 150 minutes (1 ¼ to 2 ½ hours) of vigorous intensity physical activity, or an
+          equivalent combination of both moderate and vigorous activities, each week.
+        </li>
+
+        <li>Do muscle strengthening activities on at least 2 days each week.
+          SEDENTARY BEHAVIOUR
+        </li>
+
+        <li>Minimise the amount of time spent in prolonged sitting.</li>
+
+        <li>Break up long periods of sitting as often as possible.</li>
+      </ul>
     </mat-card-content>
+    <mat-card-actions>
+      Want to join, simple no frills:
+      <button mat-raised-button color="accent" [routerLink]="['/signup']">Sign up!</button>
+    </mat-card-actions>
   </mat-card>
-</div>

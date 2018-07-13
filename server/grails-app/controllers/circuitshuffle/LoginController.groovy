@@ -68,12 +68,15 @@ class LoginController {
 
         User user = User.findByUsername(emailAddress)
         if (user) {
-            render text: "User already exists, try just logging in.", status: HttpStatus.IM_USED
+            respond text: "User already exists, try just logging in.", status: HttpStatus.IM_USED
         } else {
             def wordMap = servletContext["wordMap"]
             String password = generatePassphrase(wordMap)[0]
 
             User newUser = new User(username: emailAddress, password: password)
+            def token = UUID.randomUUID().toString()
+            // todo: create a real full JWT token
+            newUser.token = token
             newUser.save(flush: true)
             Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
             UserRole.create(newUser, userRole, true)
@@ -97,8 +100,9 @@ class LoginController {
 """
             }
 
-            Map response = [username: emailAddress, password:password]
-            respond response
+            /*Map response = [username: emailAddress, password:password]
+            respond response*/
+            respond token: token
         }
        
     }

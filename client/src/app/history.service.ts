@@ -37,7 +37,7 @@ export class HistoryService {
     httpOptions = {
         headers: new HttpHeaders()
             .append('Content-Type', 'application/json')
-           // .append('token', this.authenticationService.username)
+            .append('token', this.authenticationService.username)
     };
 
 
