@@ -34,6 +34,8 @@ SEDENTARY BEHAVIOUR
 * Goals and how much are met - A user setting to save to DB
 * Partner/group workouts?
 * Put grails plugin jasypt config in ext files: http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption
+* If a user is not on DB need better rejection to front-end
+* Grails async on email sending - eg signup
 * Better auth maybe: 
     * http://mherman.org/blog/2018/04/17/authentication-in-angular-with-ngrx/#.WuESstNuZQM
     * http://www.devglan.com/spring-security/angular-jwt-authentication
@@ -42,20 +44,31 @@ SEDENTARY BEHAVIOUR
 
 * Warmups/cooldowns -  Add perhaps as just a suggestion
 * Saved exercise sets/favourites - UI Change
-* forgotten pass
 * Fix LookupData to not include description in the findOrSave
 * Scheduled reminders to get moving and weekly/monthly report
+* Add some kind of legal verbiage, and agree to terms checkbox on signup
+* stop the timer (properly)
 
 ## WIP
 * Display logged in as username  (needs alignment)
 * Change password
-* Doing circuit move next buttons row to up top so it doesnt move each time
+* forgotten pass
+
+### Deferred
 
 ## Add as exercises
 
 ## Done
 
 #### To be reld
+* Fix suit_Type domain/table form being duplicated values - commented out now
+* stop the timer
+* Not saving wildcards? - saving as suit
+* Doing circuit move next buttons row to up top so it doesnt move each time - or fixed footer?
+* Layout of doing circuit
+
+#### data only
+* Cleanup live exercise data
 
 #### v24
 * Display logged in as username

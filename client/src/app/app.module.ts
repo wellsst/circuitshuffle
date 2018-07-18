@@ -29,7 +29,7 @@ import {
   MatSnackBarModule,
   MatCheckboxModule,
   MatProgressBarModule,
-  MatDialogModule, MatBadgeModule,
+  MatDialogModule, MatBadgeModule, MatExpansionModule,
 
 } from '@angular/material';
 import {MyNavComponent} from './my-nav/my-nav.component';
@@ -123,6 +123,7 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatIconModule,
     MatBadgeModule,
+    MatExpansionModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

@@ -74,38 +74,42 @@
             <mat-icon class="icon">delete_sweep</mat-icon>
             Reset all
           </button>
+          <div class="button-row" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
+            <span fxLayout="row">
+          <span fxFlex="10%">Rep range:</span>
+            <mat-slider
+              [max]="maxReps"
+              [min]="2"
+              [thumbLabel]=true
+              [(ngModel)]="minReps">
+            </mat-slider>
+            <mat-form-field class="number-input" fxFlex="20%">
+              <input matInput type="number" placeholder="Min" [(ngModel)]="minReps">
+            </mat-form-field>
+              </span>
+
+            <span fxLayout="row">
+              <span fxFlex="10%">to</span>
+              <mat-slider
+                [max]="20"
+                [min]="minReps"
+                [thumbLabel]=true
+                [(ngModel)]="maxReps">
+            </mat-slider>
+            <mat-form-field class="number-input" fxFlex="20%">
+              <input matInput type="number" placeholder="Max" [(ngModel)]="maxReps">
+            </mat-form-field>
+        </span>
+
+            <mat-checkbox [(ngModel)]="allowWildcards" class="wildcard">Add &#x02736;wildcard&#x02736; reps
+            </mat-checkbox>
+
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-card-content>
     <mat-card-actions>
-
-      <div class="button-row" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        Rep range:
-        <mat-slider
-          [max]="maxReps"
-          [min]="2"
-          [thumbLabel]=true
-          [(ngModel)]="minReps">
-        </mat-slider>
-        <mat-form-field class="number-input">
-          <input matInput type="number" placeholder="Min" [(ngModel)]="minReps">
-        </mat-form-field>
-        to
-        <mat-slider
-          [max]="20"
-          [min]="minReps"
-          [thumbLabel]=true
-          [(ngModel)]="maxReps">
-        </mat-slider>
-        <mat-form-field class="number-input">
-          <input matInput type="number" placeholder="Max" [(ngModel)]="maxReps">
-        </mat-form-field>
-
-        <mat-checkbox [(ngModel)]="allowWildcards">Add wildcard reps</mat-checkbox>
-
-      </div>
-
       <div class="button-row" fxLayout="row wrap" fxLayoutAlign="start center">
 
         <button mat-raised-button (click)="startCircuit()" color="primary">
@@ -139,57 +143,96 @@
       <mat-card-subtitle>Move it now!</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <!--TODO: Prob best to turn this into a sub-card-->
-      <div class="ui-g" *ngIf="!circuitComplete">
-        <div class="ui-g-12">
-          <div class="ui-g-12" *ngIf="!currentRep?.isWildcard;else wildcard_content">
+
+      <div *ngIf="!circuitComplete; else circuit_complete"
+           fxLayout="row" fxLayout.sm="column">
+        <div fxFlex>
+          <div *ngIf="!currentRep?.isWildcard;else wildcard_content">
             <!--<h4>{{currentRep?.exercise.description}}</h4>-->
-            <h3 class="{{currentRep.suit.iconName}}">
-              {{currentRep.suit.name}}
-              <div [innerHTML]="'&' + currentRep.suit.iconName + ';'"></div>
-            </h3>
+            <h2 class="{{currentRep.suit.iconName}}">
+              <span><div [innerHTML]="'&' + currentRep.suit.iconName + ';'"></div>
+              {{currentRep.suit.name}}</span>
+            </h2>
           </div>
           <ng-template #wildcard_content>
-            <div>Wildcard!</div>
+            <h2 class="wildcard">&#x02736; Wildcard! &#x02736;</h2>
           </ng-template>
         </div>
-        <div class="ui-g-12">
-          <h2 class="middle">
-            {{currentRep?.reps}} {{currentRep?.exercise.name}}</h2>
+
+        <div fxFlex="80%" fxHide.lt-md>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{currentRep?.reps}} {{currentRep?.exercise.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{currentRep?.exercise.description.substr(0, 100)}}...
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <p>{{currentRep?.exercise.description}}</p>
+
+          </mat-expansion-panel>
         </div>
-        <div class="ui-g-12">
-          <h3>{{currentRep?.exercise.description}}</h3>
+        <div fxFlex="80%" fxShow.lt-md>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{currentRep?.reps}} {{currentRep?.exercise.name}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <p>{{currentRep?.exercise.description}}</p>
+
+          </mat-expansion-panel>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="start start">
-          <div>
-            <h3>
-              Rep time:
-              <!--<app-timer #repTimer [totalSeconds]="repSecs"></app-timer>-->
-              {{ repSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
-            </h3>
-          </div>
-
-          <div>
-            <h3>Total time:
-              <!--<app-timer [totalSeconds]="totalSecs"></app-timer>-->
-              {{ totalSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
-            </h3>
-          </div>
-
-        </div>
-        <div>Reps meter: {{repsCompleted}} / {{ totalReps}} ({{((repsCompleted / totalReps)*100).toFixed(0)}}%)</div>
-        <mat-progress-bar mode="buffer"
-                          [value]="((repsCompleted / totalReps)*100).toFixed(0)"
-                          [bufferValue]="currentRep.reps"></mat-progress-bar>
       </div>
 
+      <div fxLayout="row wrap" fxLayout.sm="column">
+        <div fxFlex fxLayout.sm="column">
+          <h3>
+            Rep time:
+            <!--<app-timer #repTimer [totalSeconds]="repSecs"></app-timer>-->
+            {{ repSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
+          </h3>
+          <h3>Total time:
+            <!--<app-timer [totalSeconds]="totalSecs"></app-timer>-->
+            {{ totalSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
+          </h3>
+        </div>
+        <div fxFlex="80%">
+          <div>Reps meter: {{repsCompleted}} / {{ totalReps}} ({{((repsCompleted / totalReps)*100).toFixed(0)}}%)</div>
+          <mat-progress-bar mode="buffer"
+                            [value]="((repsCompleted / totalReps)*100).toFixed(0)"
+                            [bufferValue]="currentRep.reps"></mat-progress-bar>
+        </div>
+
+      </div>
+
+      <ng-template #circuit_complete>
+        <h2>
+          You're done, great work!
+        </h2>
+        <h3>
+          Total Reps: {{totalReps}}
+        </h3>
+        <h3>Total time:
+          {{thisCircuitTotalSecs | secsAsTime: 'seconds' : 'h [h] m [m] s [s]' }}
+        </h3>
+      </ng-template>
+
     </mat-card-content>
+
     <mat-card-actions>
-      <button mat-button (click)="doNextRep()"
-              [disabled]="circuitComplete">Next
-      </button>
-      <button mat-button (click)="quitCircuit()">Quit</button>
+      <div *ngIf="!circuitComplete; else circuit_complete_buttons">
+        <button mat-button (click)="doNextRep()" [disabled]="circuitComplete">Next</button>
+        <button mat-button (click)="quitCircuit()">Quit</button>
+      </div>
+      <ng-template #circuit_complete_buttons>
+        <a mat-button routerLink="/view-history">Check your History</a>
+        <a mat-button routerLink="/start-circuit">Start another circuit</a>
+      </ng-template>
     </mat-card-actions>
   </mat-card>
 

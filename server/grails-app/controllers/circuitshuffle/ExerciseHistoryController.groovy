@@ -59,9 +59,8 @@ class ExerciseHistoryController { //extends RestfulController<ExerciseHistory> {
     }
 
     def save(ExerciseHistory exerciseHistory) {
-        // todo: uncomment to turn auth back on
-        // def userName = request.getHeader("token")
-        String userName = "swellz@pm.me"
+        def userName = request.getHeader("token")
+        //String userName = "swellz@pm.me"
         User user
         try {
             user = checkPermissions(userName)
@@ -86,7 +85,7 @@ class ExerciseHistoryController { //extends RestfulController<ExerciseHistory> {
             exerciseHistory.user = user
             exerciseHistory.validate()
             exerciseHistory.errors.allErrors.each {
-                log.info it
+                log.info it.toString()
             }
             user.addToExerciseHistories(exerciseHistory)
             user.save()

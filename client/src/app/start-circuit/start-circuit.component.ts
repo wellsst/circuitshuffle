@@ -60,6 +60,7 @@ export class StartCircuitComponent implements OnInit {
   // For the timer
   repSecs = 0
   totalSecs = 0
+  thisCircuitTotalSecs = 0
   private subscription: Subscription;
   period = 1000
   timer: any
@@ -85,20 +86,7 @@ export class StartCircuitComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timer = TimerObservable.create(1000, this.period);
-    this.subscription = this.timer.subscribe(t => {
-      this.repSecs += (this.period / 1000)
-      this.totalSecs += (this.period / 1000)
-      this.tick = t;
-      /*this.days = Math.floor(t / 86400)
-      t -= this.days * 86400
-      this.hours = Math.floor(t / 3600) % 24
-      t -= this.hours * 3600
-      this.mins = Math.floor(t / 60) % 60
-      t -= this.mins * 60
-      this.secs = t % 60*/
-    });
-
+    //this.setupTimer();
     this.exerciseList = this.exerciseService.getList().subscribe(
       data => {
         this.exerciseList = data
@@ -131,6 +119,22 @@ export class StartCircuitComponent implements OnInit {
   }
 
 
+  private setupTimer() {
+    this.timer = TimerObservable.create(1000, this.period);
+    this.subscription = this.timer.subscribe(t => {
+      this.repSecs += (this.period / 1000)
+      this.totalSecs += (this.period / 1000)
+      this.tick = t;
+      /*this.days = Math.floor(t / 86400)
+      t -= this.days * 86400
+      this.hours = Math.floor(t / 3600) % 24
+      t -= this.hours * 3600
+      this.mins = Math.floor(t / 60) % 60
+      t -= this.mins * 60
+      this.secs = t % 60*/
+    });
+  }
+
   filter(name: string): Exercise[] {
     return this.exerciseList.filter(exercise =>
       exercise.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -154,6 +158,7 @@ export class StartCircuitComponent implements OnInit {
 
     this.totalSets = 0
     this.setsCompleted = 0
+    this.thisCircuitTotalSecs = 0
 
     let circuit = []
 
@@ -223,6 +228,7 @@ export class StartCircuitComponent implements OnInit {
       }
     }
 
+    this.setupTimer();
     this.circuitToDo = this.shuffle(circuit)
     //this.startCircuit
     this.repStartOn = moment()
@@ -265,7 +271,7 @@ export class StartCircuitComponent implements OnInit {
   doNextRep() {
     // random message
     this.openSnackBar(this.shortMsgs[Math.floor(Math.random() * this.shortMsgs.length)].summary, '')
-
+    let lastRepTimeTaken = 0
     // Completed one yet?
     if (this.currentRep) {
       this.repsCompleted += this.currentRep.reps
@@ -273,8 +279,10 @@ export class StartCircuitComponent implements OnInit {
 
       let history = this.circuitHistory.get(this.currentRep.suit.id)
       history.reps = this.currentRep.reps
+      history.exercise = this.currentRep.exercise // it could be a wildcard so set it here as the reps exercise not the suits one
       let timeTaken = moment()
       history.timeTakenSecs = timeTaken.diff(this.repStartOn, 'seconds')
+      lastRepTimeTaken = history.timeTakenSecs // For the end reporting of time
       history.completedOn = new Date()
       this.historyService.addHistory(history).subscribe(
         data => {
@@ -287,16 +295,13 @@ export class StartCircuitComponent implements OnInit {
     }
 
     // If done load the summary of the event
-    if (this.circuitToDo.length == 0) {
+    if (this.circuitToDo.length == 1) {
       this.circuitComplete = true
-
-      /*for (let suit of this.suits) {
-        let history = this.circuitHistory.get(suit.id)
-        history.completedOn = new Date()
-        this.historyService.addHistory(history)
-      }*/
+      this.timer.dispose()
     }
-
+    // small hack to get total time displayed at the end of the circuit, for some reason
+    // the totalSecs keeps ticking
+    this.thisCircuitTotalSecs = this.totalSecs + lastRepTimeTaken
     // Set the next one in the list as the current one gettin done
     this.currentRep = this.circuitToDo.shift()
     this.repSecs = 0
@@ -345,7 +350,6 @@ export class StartCircuitComponent implements OnInit {
   clearExercise(suit) {
     suit.selectedExercise = new Exercise()
   }
-
 
   ngOnChanges() {
     this.visibility = this.isVisible ? 'shown' : 'hidden';

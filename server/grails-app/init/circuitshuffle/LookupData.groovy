@@ -305,9 +305,9 @@ the knee of your other leg in toward your chest, “bicycling” and touch each 
         /*Exercise.findOrSaveWhereHistory(completedOn: new Date() - 1, reps: 10, exercise: pullUps).save()
         Exercise.findOrSaveWhereHistory(completedOn: new Date() - 2, reps: 5, exercise: calfRaises).save()*/
 
-        new SuitType(name: "Clubs", selectedExercise: pullUps).save()
+        /*new SuitType(name: "Clubs", selectedExercise: pullUps).save()
         new SuitType(name: "Spades", selectedExercise: calfRaises).save()
         new SuitType(name: "Hearts", selectedExercise: pushups).save()
-        new SuitType(name: "Diamonds", selectedExercise: squats).save()
+        new SuitType(name: "Diamonds", selectedExercise: squats).save()*/
     }
 }
