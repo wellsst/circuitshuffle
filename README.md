@@ -19,6 +19,11 @@ SEDENTARY BEHAVIOUR
 * Minimise the amount of time spent in prolonged sitting.
 * Break up long periods of sitting as often as possible.
 
+
+Today (according to Dr Axe) the ability to perform 41 burpees in one minute is deemed ‘excellent’, 
+while ‘only’ managing 27 constitutes a ’poor’ fitness level.
+ Which likely means that you’ve got work to do.
+
 ## Future features
 
 * Slider to bias legs/arms/core?
@@ -45,14 +50,16 @@ SEDENTARY BEHAVIOUR
 * Warmups/cooldowns -  Add perhaps as just a suggestion
 * Saved exercise sets/favourites - UI Change
 * Fix LookupData to not include description in the findOrSave
-* Scheduled reminders to get moving and weekly/monthly report
 * Add some kind of legal verbiage, and agree to terms checkbox on signup
-* stop the timer (properly)
+* stop the timer in Angular and display the correct total time (properly)
+* Better app for mobile see like: https://houssein.me/progressive-angular-applications 
 
 ## WIP
 * Display logged in as username  (needs alignment)
 * Change password
 * forgotten pass
+* Week by week, month by month reports or charts or something.
+* Scheduled reminders to get moving and weekly/monthly report
 
 ### Deferred
 
@@ -61,14 +68,19 @@ SEDENTARY BEHAVIOUR
 ## Done
 
 #### To be reld
+* Randomized exercise assignments not being overridden with the manual one
+* Select the exercise when changing so its more easily changed (dont need to backspace it)
+
+#### data only
+* Cleanup live exercise data
+
+#### v25
+
 * Fix suit_Type domain/table form being duplicated values - commented out now
 * stop the timer
 * Not saving wildcards? - saving as suit
 * Doing circuit move next buttons row to up top so it doesnt move each time - or fixed footer?
 * Layout of doing circuit
-
-#### data only
-* Cleanup live exercise data
 
 #### v24
 * Display logged in as username

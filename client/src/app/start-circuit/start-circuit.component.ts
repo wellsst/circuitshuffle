@@ -3,13 +3,13 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {throwError as observableThrowError, Observable} from 'rxjs';
 import {map, startWith} from "rxjs/operators";
 
-import {ExerciseRepetition, ExerciseHistory, Exercise} from '../model/model';
+import {ExerciseRepetition, ExerciseHistory, Exercise, SuitType} from '../model/model';
 import {SUIT_TYPES, SHORT_MSGS} from '../model/seed-data';
 import * as moment from 'moment';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {HistoryService} from "../history.service";
 import {ExerciseLookupService} from "../exercise-lookup.service";
-import {MatSnackBar, MatTableDataSource} from "@angular/material";
+import {MatAutocompleteSelectedEvent, MatSnackBar, MatTableDataSource} from "@angular/material";
 import * as _ from 'lodash'
 import {TimerComponent} from "../timer/timer.component";
 import {Subscription} from "rxjs/Rx";
@@ -92,12 +92,6 @@ export class StartCircuitComponent implements OnInit {
         this.exerciseList = data
 
         this.suits.forEach( suit => {
-
-          }
-        )
-
-        //for (let suit of this.suits) {
-        this.suits.forEach( suit => {
           suit.filteredExercises = suit.circuitSetupControl.valueChanges
             .pipe(
               startWith<string | Exercise>(''),
@@ -142,6 +136,12 @@ export class StartCircuitComponent implements OnInit {
 
   displayFn(user?: Exercise): string | undefined {
     return user ? user.name : undefined;
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent, suit: SuitType) {
+    /*console.log (event.option.value)
+    console.log (suit.name)*/
+    suit.selectedExercise = event.option.value
   }
 
 

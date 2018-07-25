@@ -28,8 +28,9 @@
             <mat-form-field class="example-full-width">
               <input type="text" placeholder="Exercise" aria-label="Exercise" matInput
                      [matAutocomplete]="auto" [ngModel]="suit.selectedExercise"
-                     [formControl]="suit.circuitSetupControl">
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                     [formControl]="suit.circuitSetupControl" (click)="clearExercise(suit)">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn"
+                                (optionSelected)="onSelectionChanged($event, suit)">
                 <mat-option *ngFor="let exercise of suit.filteredExercises | async" [value]="exercise">
                   {{ exercise.name }}
                 </mat-option>
