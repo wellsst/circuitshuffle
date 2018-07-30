@@ -17,6 +17,7 @@ class Exercise {
         //name unique: true
         exerciseTypes lazy: false
         description type: 'text'
+        isPrivate nullable: true
     }
 
 }
