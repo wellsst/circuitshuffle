@@ -40,6 +40,7 @@ export class ExerciseType {
 export class Exercise {
   id: number
   name: string
+  isPrivate: boolean
   description: String
   exerciseTypes: ExerciseType[]
 }

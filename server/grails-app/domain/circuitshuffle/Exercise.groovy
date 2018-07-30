@@ -10,6 +10,7 @@ class Exercise {
 
     String name
     String description
+    boolean isPrivate = false
 
     static hasMany = [exerciseTypes: ExerciseType]
     static mapping = {

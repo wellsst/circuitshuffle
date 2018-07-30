@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {ExerciseLookupService} from "../exercise-lookup.service";
+import {throwError as observableThrowError} from "rxjs/index";
 
 @Component({
   selector: 'app-exercise-list',
@@ -10,13 +11,14 @@ import {ExerciseLookupService} from "../exercise-lookup.service";
 export class ExerciseListComponent implements OnInit {
 
   exerciseList: any
-  displayedColumns = ['name', 'targeting', 'description'];
+  displayedColumns = ['name', 'targeting', 'description', 'isPrivate'];
   dataSource =  new MatTableDataSource(this.exerciseList); // need this here
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private exerciseService: ExerciseLookupService) {
+  constructor(private exerciseService: ExerciseLookupService,
+              public snackBar: MatSnackBar) {
 
   }
 
@@ -41,5 +43,26 @@ export class ExerciseListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteExercise(exercise) {
+     this.exerciseService.delete(exercise.id).subscribe(
+       data => {
+         // refresh the list
+         this.snackBar.open(`Exercise: ${exercise.name}'s deleted!`,
+           '', {
+             duration: 5000,
+           });
+         return true;
+       },
+       error => {
+         console.error("Error deleting exercise: " + error.message);
+         this.snackBar.open(`Could not delete: ${error.message}`,
+           '', {
+             duration: 10000,
+           });
+         return observableThrowError(error);
+       }
+     )
   }
 }

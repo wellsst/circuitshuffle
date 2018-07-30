@@ -48,18 +48,24 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 ## Small changes on the board
 
 * Warmups/cooldowns -  Add perhaps as just a suggestion
-* Saved exercise sets/favourites - UI Change
 * Fix LookupData to not include description in the findOrSave
 * Add some kind of legal verbiage, and agree to terms checkbox on signup
 * stop the timer in Angular and display the correct total time (properly)
 * Better app for mobile see like: https://houssein.me/progressive-angular-applications 
-
-## WIP
-* Display logged in as username  (needs alignment)
 * Change password
 * forgotten pass
 * Week by week, month by month reports or charts or something.
 * Scheduled reminders to get moving and weekly/monthly report
+* Add own custom exercises - needs to be owned by user
+* Deleting of custom exercises - check if user owns
+
+## WIP
+* Move the LoginController email HTML to be streaming groovy template
+* Display logged in as username  (needs alignment)
+* Saved exercise sets/favourites - UI Change
+
+* Add own custom exercises - better than simple version
+* Deleting of custom exercises - better than simple version
 
 ### Deferred
 
@@ -68,11 +74,20 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 ## Done
 
 #### To be reld
-* Randomized exercise assignments not being overridden with the manual one
-* Select the exercise when changing so its more easily changed (dont need to backspace it)
 
 #### data only
 * Cleanup live exercise data
+
+#### v27
+
+* Add own custom exercises - simple
+* Deleting of custom exercises - simple
+
+#### v26
+
+* Randomized exercise assignments not being overridden with the manual one
+* Select the exercise when changing so its more easily changed (dont need to backspace it)
+
 
 #### v25
 

@@ -1,10 +1,12 @@
 package circuitshuffle
 
 import grails.gorm.annotation.Entity
+import grails.rest.Resource
 import groovy.transform.ToString
 import org.grails.datastore.gorm.GormEntity
 
 @ToString
+@Resource(uri='/exerciseTypes')
 class ExerciseType  {
     String targetArea // eg biceps
     String shortName
