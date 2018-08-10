@@ -1,0 +1,7 @@
+import circuitshuffle.ExerciseSetRep
+
+model {
+	ExerciseSetRep exerciseSetRep
+}
+
+json tmpl.exerciseSetRep(exerciseSetRep)

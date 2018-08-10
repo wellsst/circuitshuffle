@@ -40,8 +40,9 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Partner/group workouts?
 * Put grails plugin jasypt config in ext files: http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption
 * If a user is not on DB need better rejection to front-end
-* Grails async on email sending - eg signup
+* Send email via non-Gmail: https://www.oodlestechnologies.com/blogs/Sending-email-through-amazon-mail-service-in-Grails
 * Better auth maybe: 
+    * https://medium.com/@ozgurgul/angular-6-login-and-router-tutorial-ac5fc5d3027f
     * http://mherman.org/blog/2018/04/17/authentication-in-angular-with-ngrx/#.WuESstNuZQM
     * http://www.devglan.com/spring-security/angular-jwt-authentication
 
@@ -60,9 +61,8 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Deleting of custom exercises - check if user owns
 
 ## WIP
-* Move the LoginController email HTML to be streaming groovy template
+* Move the LoginController email HTML to be streaming groovy template or similar
 * Display logged in as username  (needs alignment)
-* Saved exercise sets/favourites - UI Change
 
 * Add own custom exercises - better than simple version
 * Deleting of custom exercises - better than simple version
@@ -74,6 +74,9 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 ## Done
 
 #### To be reld
+* Grails async on email sending - eg signup
+* Saved exercise sets/favourites
+* Adding canned exercise set starter
 
 #### data only
 * Cleanup live exercise data

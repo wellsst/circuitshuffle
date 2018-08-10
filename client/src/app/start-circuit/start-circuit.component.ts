@@ -3,19 +3,21 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {throwError as observableThrowError, Observable} from 'rxjs';
 import {map, startWith} from "rxjs/operators";
 
-import {ExerciseRepetition, ExerciseHistory, Exercise, SuitType} from '../model/model';
+import {ExerciseRepetition, ExerciseHistory, Exercise, SuitType, ExerciseSet} from '../model/model';
 import {SUIT_TYPES, SHORT_MSGS} from '../model/seed-data';
 import * as moment from 'moment';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {HistoryService} from "../history.service";
 import {ExerciseLookupService} from "../exercise-lookup.service";
-import {MatAutocompleteSelectedEvent, MatSnackBar, MatTableDataSource} from "@angular/material";
+import {MatAutocompleteSelectedEvent, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import * as _ from 'lodash'
 import {TimerComponent} from "../timer/timer.component";
 import {Subscription} from "rxjs/Rx";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {QuitPromptComponent} from "../quit-prompt/quit-prompt.component";
+import {SelectionModel} from '@angular/cdk/collections';
+import {ExerciseSetService} from '../exercise-set.service';
 
 
 @Component({
@@ -41,7 +43,7 @@ export class StartCircuitComponent implements OnInit {
 
   suits = SUIT_TYPES
   shortMsgs = SHORT_MSGS
-  currentMsg = ""
+  currentMsg = ''
 
   minReps = 4
   maxReps = 10
@@ -66,7 +68,7 @@ export class StartCircuitComponent implements OnInit {
   timer: any
   private tick: number;
 
-  repStartOn: any //moment
+  repStartOn: any; // moment
 
   circuitHistory: Map<number, ExerciseHistory>
   circuitToDo: ExerciseRepetition[]
@@ -75,8 +77,24 @@ export class StartCircuitComponent implements OnInit {
   circuitSetupControl = new FormControl();
   circuitSetupControls = [];
 
+  // Setup for table to display the ExerciseSets
+  setList: any;
+  displayedColumns = ['select', 'name', 'description', 'reps'];
+  dataSource = new MatTableDataSource(this.setList); // need this here
+
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  // for table selections
+  initialSelection = [];
+  allowMultiSelect = true;
+  selectedSets = new SelectionModel<ExerciseSet>(this.allowMultiSelect, this.initialSelection);
+
+  selectedTab = new FormControl(0);
+
   constructor(private exerciseService: ExerciseLookupService,
               private historyService: HistoryService,
+              private exerciseSetService: ExerciseSetService,
               public snackBar: MatSnackBar,
               public dialog: MatDialog) {
 
@@ -86,7 +104,7 @@ export class StartCircuitComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.setupTimer();
+    // this.setupTimer();
     this.exerciseList = this.exerciseService.getList().subscribe(
       data => {
         this.exerciseList = data
@@ -109,7 +127,19 @@ export class StartCircuitComponent implements OnInit {
       },
       err => console.error(err),
       () => console.log('done loading exercise list: ' + this.exerciseList.length)
-    )
+    );
+
+    this.exerciseSetService.getList().subscribe(
+      data => {
+        this.setList = data;
+        this.dataSource = new MatTableDataSource(this.setList);   // and need this here it seems
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      err => console.error(err),
+      () => console.log('done loading exercise set list: ' + this.setList[0])
+    );
   }
 
 
@@ -161,82 +191,100 @@ export class StartCircuitComponent implements OnInit {
     this.thisCircuitTotalSecs = 0
 
     let circuit = []
+    this.circuitHistory = new Map();
 
-    this.circuitHistory = new Map()
-
-    let lowerRange = this.minReps;
-    let upperRange = this.maxReps;
-
-    let selectedExercises = [] // to avoid duplicates
-    for (let suit of this.suits) {
-      let exercise = suit.selectedExercise
-      if (exercise && exercise.id) {
-        selectedExercises.push(exercise)
-      }
+    switch (this.selectedTab.value) {
+      case 0:
+        this.buildShuffledCircuit(circuit);
+        break;
+      case 1:
+        this.buildSetBasedCircuit(circuit)
+        break;
+      default:
+        break;
     }
-
-    for (let i = lowerRange; i <= upperRange; i++) {
-      for (let suit of this.suits) {
-        let rep = new ExerciseRepetition()
-
-        if (suit.selectRandomExercise || suit.selectedExercise == null || suit.selectedExercise.name === "") {
-          /*this.exerciseService.getRandomExercise().subscribe(
-            data => {
-              console.info(data)
-              //suit.selectedExercise = JSON.parse(data)
-            },
-            err => console.error(err),
-            () => console.log('done loading random exercise: ')
-          );*/
-          suit.selectedExercise = this.getRandomExercise(selectedExercises); // todo: could extend to search with ExerciseType
-          selectedExercises.push(suit.selectedExercise)
-        }
-        let exerciseHistory = new ExerciseHistory()
-        exerciseHistory.exercise = suit.selectedExercise
-        exerciseHistory.reps = 0
-        this.circuitHistory.set(suit.id, exerciseHistory)
-        /*if (this.allowWildcards && !suit.wilcardAllocated &&
-          this.rand(lowerRange, upperRange) <= (upperRange - lowerRange)) {
-          rep.exercise = this.exerciseService.getRandomExercise([])
-          rep.isWildcard = true
-          suit.wilcardAllocated = true
-        } else {*/
-        rep.exercise = suit.selectedExercise
-        //}
-
-        //rep.id = 1 // todo: Use the service to assign this
-        rep.reps = i
-        rep.suit = suit
-        this.totalReps += i
-        this.totalSets += 1
-        circuit.push(rep)
-      }
-    }
-
-    // Add wildcard reps?
-    if (this.allowWildcards) {
-      for (let suit of this.suits) {
-        let rep = new ExerciseRepetition()
-        rep.exercise = this.getRandomExercise([])
-        rep.isWildcard = true
-
-        rep.reps = this.rand(this.minReps, this.maxReps)
-        rep.suit = suit
-        this.totalReps += rep.reps
-        this.totalSets += 1
-        circuit.push(rep)
-      }
-    }
-
     this.setupTimer();
-    this.circuitToDo = this.shuffle(circuit)
-    //this.startCircuit
+    // this.startCircuit
     this.repStartOn = moment()
     this.doNextRep()
 
     console.log(circuit)
 
     this.showDoingCircuitDialog = true
+  }
+
+  private buildSetBasedCircuit(circuit) {
+    this.selectedSets.selected.forEach(set => {
+            
+      set.exerciseReps.forEach(rep => {
+        let repToDo = new ExerciseRepetition();
+        repToDo.reps = rep.nrReps;
+        repToDo.exercise = rep.exercise;
+        repToDo.suit = {name: set.name, iconName: "dagger", id: 9999};
+        this.totalReps += repToDo.reps;
+        this.totalSets += 1;
+        circuit.push(repToDo);
+
+        let exerciseHistory = new ExerciseHistory();
+        exerciseHistory.exercise = repToDo.exercise;
+        exerciseHistory.reps = 0;
+        this.circuitHistory.set(repToDo.suit.id, exerciseHistory);
+        // rep.exercise = suit.selectedExercise;
+
+      });
+    });
+    this.circuitToDo = circuit;
+  }
+
+  private buildShuffledCircuit(circuit) {
+    let lowerRange = this.minReps;
+    let upperRange = this.maxReps;
+
+    let selectedExercises = []; // to avoid duplicates
+    for (let suit of this.suits) {
+      let exercise = suit.selectedExercise;
+      if (exercise && exercise.id) {
+        selectedExercises.push(exercise);
+      }
+    }
+
+    for (let i = lowerRange; i <= upperRange; i++) {
+      for (let suit of this.suits) {
+        let rep = new ExerciseRepetition();
+
+        if (suit.selectRandomExercise || suit.selectedExercise == null || suit.selectedExercise.name === '') {
+          suit.selectedExercise = this.getRandomExercise(selectedExercises); // todo: could extend to search with ExerciseType
+          selectedExercises.push(suit.selectedExercise);
+        }
+        let exerciseHistory = new ExerciseHistory();
+        exerciseHistory.exercise = suit.selectedExercise;
+        exerciseHistory.reps = 0;
+        this.circuitHistory.set(suit.id, exerciseHistory);
+        rep.exercise = suit.selectedExercise;
+
+        rep.reps = i;
+        rep.suit = suit;
+        this.totalReps += i;
+        this.totalSets += 1;
+        circuit.push(rep);
+      }
+    }
+
+    // Add wildcard reps?
+    if (this.allowWildcards) {
+      for (let suit of this.suits) {
+        let rep = new ExerciseRepetition();
+        rep.exercise = this.getRandomExercise([]);
+        rep.isWildcard = true;
+
+        rep.reps = this.rand(this.minReps, this.maxReps);
+        rep.suit = suit;
+        this.totalReps += rep.reps;
+        this.totalSets += 1;
+        circuit.push(rep);
+      }
+    }
+    this.circuitToDo = this.shuffle(circuit);
   }
 
   rand(min: number, max: number): number {
@@ -355,4 +403,17 @@ export class StartCircuitComponent implements OnInit {
     this.visibility = this.isVisible ? 'shown' : 'hidden';
   }
 
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selectedSets.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectedSets.clear() :
+      this.dataSource.data.forEach(row => this.selectedSets.select(row));
+  }
 }

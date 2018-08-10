@@ -34,7 +34,7 @@ export class ExerciseLookupService {
 
   getExerciseList(query) {
 
-    //return this.http.get("http://localhost:5050/exercise/" + query)
+    // return this.http.get("http://localhost:5050/exercise/" + query)
     // console.log(this.exerciseList)
     if (query) {
       return this.exerciseList.filter(exercise => exercise.name.toLowerCase().startsWith(query.toLowerCase()));
@@ -44,19 +44,19 @@ export class ExerciseLookupService {
   }
 
   getList() {
-    return this.http.get(environment.serverUrl + "/exercise/")
+    return this.http.get(environment.serverUrl + "/exercise/", this.httpOptions)
   }
 
   getTargetAreasList() {
-    return this.http.get(environment.serverUrl + "/exerciseTypes/")
+    return this.http.get(environment.serverUrl + "/exerciseTypes/", this.httpOptions)
   }
 
   getRandomExercise(excludeList) {
-    //return this.http.get("http://localhost:5050/randomExercise/"
+    // return this.http.get("http://localhost:5050/randomExercise/"
     let listLength = this.exerciseList.length - excludeList.length
     return _.difference(this.exerciseList, excludeList)[Math.floor(Math.random() * listLength)]
 
-    //return this.exerciseList[Math.floor(Math.random() * this.exerciseList.length)]
+    // return this.exerciseList[Math.floor(Math.random() * this.exerciseList.length)]
   }
 
   saveExercise(exercise: Exercise) {

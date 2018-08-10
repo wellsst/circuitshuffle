@@ -32,32 +32,87 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100%">
-          <input matInput type="number" placeholder="Nr Reps" [(ngModel)]="rep.reps">
-          <!--    <mat-error *ngIf="repFormControl.hasError('email') && !repFormControl.hasError('required')">
-                Please enter a valid email address
-              </mat-error>-->
-          <mat-error *ngIf="repFormControl.hasError('required')">
-            Number of reps is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="100%">
-          <input type="text" placeholder="Exercise" aria-label="Exercise" matInput
-                 [matAutocomplete]="auto" [(ngModel)]="rep.exercise" [formControl]="exerciseControl">
-          <!--[formControl]="exerciseControl">-->
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let exercise of filteredOptions | async" [value]="exercise">
-              {{ exercise.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="100%">
           <input matInput type="number" placeholder="Time taken" [(ngModel)]="rep.timeTakenSecs">
           <mat-error *ngIf="repFormControl.hasError('required')">
             Time taken is <strong>required</strong>
           </mat-error>
         </mat-form-field>
+
+
+        <mat-tab-group [selectedIndex]="selectedTab.value"
+                       (selectedIndexChange)="selectedTab.setValue($event)">
+          <mat-tab label="By the Exercise">
+
+            <mat-form-field fxFlex="100%">
+              <input matInput type="number" placeholder="Nr Reps" [(ngModel)]="rep.nrReps">
+              <!--    <mat-error *ngIf="repFormControl.hasError('email') && !repFormControl.hasError('required')">
+                    Please enter a valid email address
+                  </mat-error>-->
+              <mat-error *ngIf="repFormControl.hasError('required')">
+                Number of reps is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100%">
+              <input type="text" placeholder="Exercise" aria-label="Exercise" matInput
+                     [matAutocomplete]="auto" [(ngModel)]="rep.exercise" [formControl]="exerciseControl">
+              <!--[formControl]="exerciseControl">-->
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let exercise of filteredOptions | async" [value]="exercise">
+                  {{ exercise.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-tab>
+
+          <mat-tab label="By Sets">
+
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selectedSets.hasValue() && isAllSelected()"
+                                [indeterminate]="selectedSets.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selectedSets.toggle(row) : null"
+                                [checked]="selectedSets.isSelected(row)">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.name}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description</th>
+                <td mat-cell *matCellDef="let element"> {{element.description}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="reps">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Reps</th>
+                <td mat-cell *matCellDef="let element">
+                  <small>
+                    <div *ngFor="let rep of element.exerciseReps">
+                      {{rep.exercise.name}} - <input matInput type="number" placeholder="Reps" [(ngModel)]="rep.nrReps">
+                    </div>
+                  </small>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </mat-tab>
+        </mat-tab-group>
       </div>
       <!-- </form>-->
     </mat-card-content>

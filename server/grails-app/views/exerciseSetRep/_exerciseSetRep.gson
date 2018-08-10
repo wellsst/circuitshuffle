@@ -1,0 +1,13 @@
+import circuitshuffle.ExerciseSetRep
+
+model {
+	ExerciseSetRep exerciseSetRep
+}
+
+json g.render(exerciseSetRep, [resolveTemplate: false, excludes: ["exercise"]] ) {
+	exercise {
+		id exerciseSetRep.exercise.id
+		name exerciseSetRep.exercise.name
+		description exerciseSetRep.exercise.description
+	}
+}

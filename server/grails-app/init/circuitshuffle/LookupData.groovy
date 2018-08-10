@@ -33,10 +33,15 @@ class LookupData {
         /*PUSHING*/
         def pushups
         try {
+            System.err.println("pushups pre:" + pushups)
              pushups = Exercise.findOrSaveWhere(name: "Push-ups", description: "Pushups standard - hands under shoulders").
                     addToExerciseTypes(etShoulder).addToExerciseTypes(etPecs).addToExerciseTypes(etSpinal).
                     addToExerciseTypes(etTriceps).addToExerciseTypes(etAbs)
+            System.err.println("pushups:" + pushups.validate())
+            System.err.println("pushups:" + pushups.errors.toString())
         } catch (all) {
+            System.err.println all.message
+            all.printStackTrace()
         }
         
         Exercise.findOrSaveWhere(name: "Push-ups wide", description: "Pushups wide - hands further apart").
@@ -55,7 +60,7 @@ class LookupData {
                 addToExerciseTypes(etShoulder).addToExerciseTypes(etPecs).addToExerciseTypes(etSpinal).
                 addToExerciseTypes(etTriceps).addToExerciseTypes(etAbs)
 
-        Exercise.findOrSaveWhere(name: "Push-ups - with dumbell row", description: "Standard pushup on light dumbells with a row (raising the bell to your chest)").
+        Exercise pushupRow = Exercise.findOrSaveWhere(name: "Push-ups - with dumbell row", description: "Standard pushup on light dumbells with a row (raising the bell to your chest)").
                 addToExerciseTypes(etShoulder).addToExerciseTypes(etPecs).addToExerciseTypes(etSpinal).
                 addToExerciseTypes(etTriceps).addToExerciseTypes(etAbs).addToExerciseTypes(etLats)
 
@@ -86,7 +91,7 @@ class LookupData {
         Exercise.findOrSaveWhere(name: "Muscle-ups", description: "Pull-ups with a dips above bar/rings (jump if you have to!)").addToExerciseTypes(etBiceps).
                 addToExerciseTypes(etAbs)
 
-        Exercise.findOrSaveWhere(name: "Curls", description: "Dumbell etc of your choosing and bust out some reps.  Even do this as isometric, using your other arm as resistance").addToExerciseTypes(etBiceps).
+        Exercise exCurls = Exercise.findOrSaveWhere(name: "Curls", description: "Dumbell etc of your choosing and bust out some reps.  Even do this as isometric, using your other arm as resistance").addToExerciseTypes(etBiceps).
                 addToExerciseTypes(etAbs)
 
         /* General */
@@ -144,7 +149,7 @@ class LookupData {
         Exercise.findOrSaveWhere(name: "Wall Squat hold (10 secs per rep)", description: "Stand up with your back against a wall or yoga ball, squat and hold. your knees should be directly above your feet and be bent at 90 degrees. Keeping your butt and back against the wall").
                 addToExerciseTypes(etQuads)
 
-        Exercise.findOrSaveWhere(name: "Lunges", description: "Stand with your feet together, toes pointed straight ahead. Take a big step forward with your left foot, bending your knees and lowering your hips until your trailing right knee almost touches the ground. Both knees\n" +
+        Exercise exLunges = Exercise.findOrSaveWhere(name: "Lunges", description: "Stand with your feet together, toes pointed straight ahead. Take a big step forward with your left foot, bending your knees and lowering your hips until your trailing right knee almost touches the ground. Both knees\n" +
                 "should be bent to 90 degrees at this point").
                 addToExerciseTypes(etQuads).addToExerciseTypes(etGluts).addToExerciseTypes(etHipFlexs)
 
@@ -181,7 +186,7 @@ Try rocking forward and back to find where that point is for you.
 """
 
         /* JUMPS */
-        Exercise.findOrSaveWhere(name: "Running", description: "Run/high knees on the spot for at least 20 secs per rep").
+        Exercise highKnees = Exercise.findOrSaveWhere(name: "Running", description: "Run/high knees on the spot for at least 20 secs per rep").
                 addToExerciseTypes(etSols).addToExerciseTypes(etGas).
                 addToExerciseTypes(etCardio).addToExerciseTypes(etGluts)
 
@@ -270,6 +275,27 @@ Lift one leg and then the other in a flutter motion, as if you were swimming.
 """
         flProne.save()
 
+        def kneesToElbows = Exercise.findOrCreateWhere(name: "Knees to Elbows").
+                addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
+                addToExerciseTypes(etAbs)
+        kneesToElbows.description = """Lie on your back arms stretched above your head and legs straight out.  
+Crunch up to bring your knees to meet your elbows just above your centre.  Use small weights for added intensity"""
+        kneesToElbows.save()
+
+        def raisedLegHold = Exercise.findOrCreateWhere(name: "Raised Leg Hold").
+                addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
+                addToExerciseTypes(etAbs)
+        raisedLegHold.description = """Lie on your back arms by your side for support and legs straight out.  
+Raise your legs to about 45 degree angle and hold for 10 secs per rep"""
+        raisedLegHold.save()
+
+        def sittingTwists = Exercise.findOrCreateWhere(name: "Sitting Twists").
+                addToExerciseTypes(etCore).addToExerciseTypes(etHipFlexs).
+                addToExerciseTypes(etAbs)
+        sittingTwists.description = """Sit on the ground with your arms straigh out, knees bent and prefereably with a small amount of weight
+Twist gently from left (at 90 degrees) and back to the right - thats 1 rep"""
+        sittingTwists.save()
+
         Exercise.findOrSaveWhere(name: "Bear crawls", description: "(reps x2 of asked for, so for x10 you do 20 (left and right crawl is 1 rep!))Down on all fours, legs and arms straight or bent whatever feels right to you.  Left arm and right leg forward, then vica versa").
                 addToExerciseTypes(etCore).addToExerciseTypes(etShoulder).addToExerciseTypes(etQuads).
                 addToExerciseTypes(etAbs).addToExerciseTypes(etTriceps).addToExerciseTypes(etSpinal)
@@ -301,6 +327,38 @@ the knee of your other leg in toward your chest, “bicycling” and touch each 
 
         Exercise.findOrSaveWhere(name: "Planks", description: """For 10 secs each rep - Get on your elbows and balls of your feet, hold straight and tight like a plank""").
                 addToExerciseTypes(etCore).addToExerciseTypes(etAbs)
+
+        /**
+         * Sets! First just clear out all the old ones onwed by nobody (eg the admin)
+         */
+        ExerciseSet.findAllByOwnerIsNull().each { set ->
+            set.delete()
+        }
+
+        def repMinuteHighKnees = new ExerciseSetRep(position: 0, nrReps: 3, exercise: highKnees).save()
+        def rep20Lunges = new ExerciseSetRep(position: 1, nrReps: 20, exercise: exLunges).save()
+        def rep20PushupRows = new ExerciseSetRep(position: 2, nrReps: 20, exercise: pushupRow).save()
+        def rep20Curls = new ExerciseSetRep(position: 3, nrReps: 20, exercise: exCurls).save()
+        def rep20kneesToElbows = new ExerciseSetRep(position: 4, nrReps: 20, exercise: kneesToElbows).save()
+        def rep20raisedLegHold = new ExerciseSetRep(position: 5, nrReps: 20, exercise: raisedLegHold).save()
+        def rep20sittingTwists = new ExerciseSetRep(position: 6, nrReps: 20, exercise: sittingTwists).save()
+
+        def setMilFitRecruit = ExerciseSet.findOrCreateWhere(name: "MilFit - Recruit", owner: null).
+        addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
+        addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
+        addToExerciseReps(rep20sittingTwists)
+        setMilFitRecruit.description = """Borrowed from darebee.com - Military Fit series - Recruit workout - a simple cicuit
+Start each set with a minute of high knees"""
+        setMilFitRecruit.save()
+
+        def setMilFitEqualizer = ExerciseSet.findOrCreateWhere(name: "MilFit - Equalizer", owner: null).
+        addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
+        addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
+        addToExerciseReps(rep20sittingTwists)
+        setMilFitEqualizer.description = """Borrowed from darebee.com - Military Fit series - Equalizer workout."""
+        setMilFitEqualizer.save()
+
+
 
         /*Exercise.findOrSaveWhereHistory(completedOn: new Date() - 1, reps: 10, exercise: pullUps).save()
         Exercise.findOrSaveWhereHistory(completedOn: new Date() - 2, reps: 5, exercise: calfRaises).save()*/

@@ -30,7 +30,8 @@ import {
   MatCheckboxModule,
   MatProgressBarModule,
   MatDialogModule, MatBadgeModule, MatExpansionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule
 
 } from '@angular/material';
 import {MyNavComponent} from './my-nav/my-nav.component';
@@ -57,6 +58,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AddExerciseSetComponent } from './add-exercise-set/add-exercise-set.component';
+import { ArraySortPipe } from './array-sort.pipe';
 
 
 const appRoutes: Routes = [
@@ -68,6 +71,7 @@ const appRoutes: Routes = [
   {path: 'exercise-list', component: ExerciseListComponent},
   {path: 'start-circuit', component: StartCircuitComponent, canActivate: [AuthGuard]},
   {path: 'add-exercise', component: AddExerciseComponent, canActivate: [AuthGuard]},
+  {path: 'add-exercise-set', component: AddExerciseSetComponent, canActivate: [AuthGuard]},
   {path: 'add-reps', component: AddRepsComponent, canActivate: [AuthGuard]}
 ];
 
@@ -92,7 +96,9 @@ const appRoutes: Routes = [
     LogoutComponent,
     UserInfoComponent,
     ForgottenPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AddExerciseSetComponent,
+    ArraySortPipe,
   ],
   imports: [
     BrowserModule,
@@ -126,6 +132,7 @@ const appRoutes: Routes = [
     MatBadgeModule,
     MatExpansionModule,
     MatSelectModule,
+    MatTabsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

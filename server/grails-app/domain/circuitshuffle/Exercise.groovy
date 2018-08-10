@@ -1,5 +1,6 @@
 package circuitshuffle
 
+import circuitshuffle.auth.User
 import grails.gorm.annotation.Entity
 import grails.rest.Resource
 import groovy.transform.ToString
@@ -12,12 +13,17 @@ class Exercise {
     String description
     boolean isPrivate = false
 
+    User owner
+
     static hasMany = [exerciseTypes: ExerciseType]
     static mapping = {
-        //name unique: true
         exerciseTypes lazy: false
         description type: 'text'
+    }
+    static constraints = {
+        //name unique: true
         isPrivate nullable: true
+        owner nullable: true
     }
 
 }

@@ -3,18 +3,20 @@ package circuitshuffle
 import circuitshuffle.auth.Role
 import circuitshuffle.auth.User
 import circuitshuffle.auth.UserRole
+import grails.async.Promise
 import org.apache.commons.lang.WordUtils
 import org.springframework.http.HttpStatus
+import static grails.async.Promises.*
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 
 class LoginController {
-	static responseFormats = ['json', 'xml']
+    static responseFormats = ['json', 'xml']
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def mailService
 
-    def index() { }
+    def index() {}
 
     def show() {
         if (request.get) {
@@ -32,8 +34,7 @@ class LoginController {
             else {
                 render(view: "login", model: [message: "Password incorrect"])
             }*/
-        }
-        else {
+        } else {
             println "Rendering to login page..."
             render(view: "login", model: [message: "User not found"])
         }
@@ -43,7 +44,7 @@ class LoginController {
     def login() {
         String username = request.JSON.username
         String password = request.JSON.password
-        log.info( "Login attempt: ${request.JSON}")
+        log.info("Login attempt: ${request.JSON}")
 
         // def user = User.findByUsernameAndPassword(username, password)
         def user = User.findByUsername(username)
@@ -81,30 +82,41 @@ class LoginController {
             Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
             UserRole.create(newUser, userRole, true)
 
-            mailService.sendMail {
-                to emailAddress
-                from "websystemz@gmail.com"
-                subject "Hello from CircuitShuffle"
-                // html view: "/emails/html-hello", model: [param1: "value1", param2: "value2"]
-                html """
-<p>Congrats!  You have signed-up to CircuitShuffle, your password is: <b>${password}</b><p>
-    <p></p>
-    <p>We suggest changing this password ASAP</p>
-    <p></p>
-    <p><a href='${grailsApplication.config.grails.serverURL}/login'>Login:  using your email address</a></p>
-    <p></p>
-    <p>Happy shuffling!</p>
-    <p></p>
-    <p>The CircuitShuffle team</p>
-    
-"""
+            // todo: Move to a Service:
+            Promise p = task {
+                // Long running task
+
+                mailService.sendMail {
+                    to emailAddress
+                    from "websystemz@gmail.com"
+                    subject "Hello from CircuitShuffle"
+                    // html view: "/emails/html-hello", model: [param1: "value1", param2: "value2"]
+                    html """
+                    <p>Congrats!  You have signed-up to CircuitShuffle, your password is: <b>${password}</b><p>
+                        <p></p>
+                        <p>We suggest changing this password ASAP</p>
+                        <p></p>
+                        <p><a href='${grailsApplication.config.grails.serverURL}/login'>Login:  using your email address</a></p>
+                        <p></p>
+                        <p>Happy shuffling!</p>
+                        <p></p>
+                        <p>The CircuitShuffle team</p>
+                        
+                    """
+                }
+            }
+            p.onError { Throwable err ->
+                println "An error occured ${err.message}"
+            }
+            p.onComplete { result ->
+                println "Promise returned $result"
             }
 
             /*Map response = [username: emailAddress, password:password]
             respond response*/
             respond token: token
         }
-       
+
     }
 
     private static List generatePassphrase(def wordMap, int nrPhrases = 1, int nrWords = 3) {

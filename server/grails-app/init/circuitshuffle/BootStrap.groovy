@@ -20,7 +20,7 @@ class BootStrap {
 
         /*mailService.sendMail {
             to "wellsst@gmail.com"
-            from "websystemz@gmail.com"
+            from "websystemz@gmail.com"                                                
             subject "Hello from CS"
             html "<b>Hello</b> World"
         }
@@ -36,8 +36,13 @@ class BootStrap {
        // Role userRole2 = Role.findOrSaveByAuthority("ROLE_USER")
         /*User user2 = User.findOrSaveByUsernameAndPassword("steve", "123qwe")
         UserRole.create(user2, userRole, true)*/
-
-        LookupData.create()
+        log.info "Creating lookup data..."
+        try {
+            LookupData.create()
+        } catch (all) {
+            all.printStackTrace()
+        }
+        log.info "Lookup data defined."
     }
     
     def destroy = {

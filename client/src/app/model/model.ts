@@ -1,7 +1,6 @@
 export class HistoricalCategory {
   id: number
-  name: String
-
+  name: String;
 }
 
 export class User {
@@ -13,23 +12,30 @@ export class User {
 
 export class SuitType {
   id: number
-  name: String // clubs, hearts
+  name: String; // clubs, hearts
   selectedExercise?: Exercise
   selectRandomExercise?: boolean = false
   wilcardAllocated?: boolean = false
   // ui
   circuitSetupControl?: any
   filteredExercises?: any
-  iconName?: String
+  iconName?: String;
 }
 
 export class ExerciseRepetition {
   id: number
   name: String
-  exercise: Exercise //what will the user do
+  exercise: Exercise; // what will the user do
   reps: number
   isWildcard?: boolean = false
-  suit: SuitType
+  suit?: SuitType;
+}
+
+export class ExerciseSetRep {
+  id: number
+  position: number
+  exercise: Exercise; // what will the user do
+  nrReps: number
 }
 
 export class ExerciseType {
@@ -43,6 +49,7 @@ export class Exercise {
   isPrivate: boolean
   description: String
   exerciseTypes: ExerciseType[]
+  owner: User;
 }
 
 export class ExerciseHistory {
@@ -51,7 +58,15 @@ export class ExerciseHistory {
   completedOn: Date
   exercise: Exercise
   reps: number
-  timeTakenSecs: number
+  timeTakenSecs: number;
+}
+
+export class ExerciseSet {
+ // id: number
+  name?: string
+  description?: String
+  exerciseReps?: ExerciseSetRep[]
+  owner?: User;
 }
 
 /*
@@ -62,6 +77,6 @@ export class Message {
 
 export class Prefs {
   id: number
-  name: String
+  name: String;
 
 }
