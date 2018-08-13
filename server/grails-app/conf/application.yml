@@ -103,7 +103,7 @@ environments:
     test:
         dataSource:
             dbCreate: create
-            url: jdbc:h2:~/data/circuitShuffleProdDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+            url: jdbc:h2:~/data/circuitShuffleProdDb2;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
             driverClassName: org.h2.Driver
             username: sa
             password: ''

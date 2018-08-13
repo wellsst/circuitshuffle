@@ -34,7 +34,7 @@ class LookupData {
         def pushups
         try {
             System.err.println("pushups pre:" + pushups)
-             pushups = Exercise.findOrSaveWhere(name: "Push-ups", description: "Pushups standard - hands under shoulders").
+            pushups = Exercise.findOrSaveWhere(name: "Push-ups", description: "Pushups standard - hands under shoulders").
                     addToExerciseTypes(etShoulder).addToExerciseTypes(etPecs).addToExerciseTypes(etSpinal).
                     addToExerciseTypes(etTriceps).addToExerciseTypes(etAbs)
             System.err.println("pushups:" + pushups.validate())
@@ -43,7 +43,7 @@ class LookupData {
             System.err.println all.message
             all.printStackTrace()
         }
-        
+
         Exercise.findOrSaveWhere(name: "Push-ups wide", description: "Pushups wide - hands further apart").
                 addToExerciseTypes(etShoulder).addToExerciseTypes(etPecs).addToExerciseTypes(etSpinal).
                 addToExerciseTypes(etTriceps).addToExerciseTypes(etAbs)
@@ -173,7 +173,7 @@ class LookupData {
                 addToExerciseTypes(etSpinal).addToExerciseTypes(etCore).
                 addToExerciseTypes(etTraps).addToExerciseTypes(etShoulder).
                 addToExerciseTypes(etFes).addToExerciseTypes(etFfs)
-        crow.description= """https://gmb.io/crow-pose/
+        crow.description = """https://gmb.io/crow-pose/
 
 Sit down on your knees.
 Make a diamond with your hands.
@@ -331,34 +331,32 @@ the knee of your other leg in toward your chest, “bicycling” and touch each 
         /**
          * Sets! First just clear out all the old ones onwed by nobody (eg the admin)
          */
-        ExerciseSet.where {
+        /*ExerciseSet.where {
             owner == null
-        }.deleteAll()
+        }.deleteAll()*/
 
-        def repMinuteHighKnees = new ExerciseSetRep(position: 0, nrReps: 3, exercise: highKnees).save()
-        def rep20Lunges = new ExerciseSetRep(position: 1, nrReps: 20, exercise: exLunges).save()
-        def rep20PushupRows = new ExerciseSetRep(position: 2, nrReps: 20, exercise: pushupRow).save()
-        def rep20Curls = new ExerciseSetRep(position: 3, nrReps: 20, exercise: exCurls).save()
-        def rep20kneesToElbows = new ExerciseSetRep(position: 4, nrReps: 20, exercise: kneesToElbows).save()
-        def rep20raisedLegHold = new ExerciseSetRep(position: 5, nrReps: 20, exercise: raisedLegHold).save()
-        def rep20sittingTwists = new ExerciseSetRep(position: 6, nrReps: 20, exercise: sittingTwists).save()
+        def repMinuteHighKnees = ExerciseSetRep.findOrSaveWhere(position: 0, nrReps: 3, exercise: highKnees)
+        def rep20Lunges = ExerciseSetRep.findOrSaveWhere(position: 1, nrReps: 20, exercise: exLunges)
+        def rep20PushupRows = ExerciseSetRep.findOrSaveWhere(position: 2, nrReps: 20, exercise: pushupRow)
+        def rep20Curls = ExerciseSetRep.findOrSaveWhere(position: 3, nrReps: 20, exercise: exCurls)
+        def rep20kneesToElbows = ExerciseSetRep.findOrSaveWhere(position: 4, nrReps: 20, exercise: kneesToElbows)
+        def rep20raisedLegHold = ExerciseSetRep.findOrSaveWhere(position: 5, nrReps: 20, exercise: raisedLegHold)
+        def rep20sittingTwists = ExerciseSetRep.findOrSaveWhere(position: 6, nrReps: 20, exercise: sittingTwists)
 
         def setMilFitRecruit = ExerciseSet.findOrCreateWhere(name: "MilFit - Recruit", owner: null).
-        addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
-        addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
-        addToExerciseReps(rep20sittingTwists)
+                addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
+                addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
+                addToExerciseReps(rep20sittingTwists)
         setMilFitRecruit.description = """Borrowed from darebee.com - Military Fit series - Recruit workout - a simple cicuit
 Start each set with a minute of high knees"""
         setMilFitRecruit.save()
 
         def setMilFitEqualizer = ExerciseSet.findOrCreateWhere(name: "MilFit - Equalizer", owner: null).
-        addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
-        addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
-        addToExerciseReps(rep20sittingTwists)
+                addToExerciseReps(repMinuteHighKnees).addToExerciseReps(rep20Lunges).addToExerciseReps(rep20PushupRows).
+                addToExerciseReps(rep20Curls).addToExerciseReps(rep20kneesToElbows).addToExerciseReps(rep20raisedLegHold).
+                addToExerciseReps(rep20sittingTwists)
         setMilFitEqualizer.description = """Borrowed from darebee.com - Military Fit series - Equalizer workout."""
         setMilFitEqualizer.save()
-
-
 
         /*Exercise.findOrSaveWhereHistory(completedOn: new Date() - 1, reps: 10, exercise: pullUps).save()
         Exercise.findOrSaveWhereHistory(completedOn: new Date() - 2, reps: 5, exercise: calfRaises).save()*/
