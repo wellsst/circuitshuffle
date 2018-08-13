@@ -331,9 +331,9 @@ the knee of your other leg in toward your chest, “bicycling” and touch each 
         /**
          * Sets! First just clear out all the old ones onwed by nobody (eg the admin)
          */
-        ExerciseSet.findAllByOwnerIsNull().each { set ->
-            set.delete()
-        }
+        ExerciseSet.where {
+            owner == null
+        }.deleteAll()
 
         def repMinuteHighKnees = new ExerciseSetRep(position: 0, nrReps: 3, exercise: highKnees).save()
         def rep20Lunges = new ExerciseSetRep(position: 1, nrReps: 20, exercise: exLunges).save()

@@ -6,7 +6,7 @@ class ExerciseSetRep {
     int nrReps
     int position
 
-    static belongsTo = [ExerciseSet]
+    static belongsTo = [exerciseSet: ExerciseSet]
 
     static mapping = {
         sort position:"asc"

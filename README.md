@@ -67,6 +67,9 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Add own custom exercises - better than simple version
 * Deleting of custom exercises - better than simple version
 
+* Check owner being set on save of exercise set
+* Ensure user cannot update built in sets
+
 ### Deferred
 
 ## Add as exercises
@@ -74,6 +77,8 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 ## Done
 
 #### To be reld
+
+#### v29
 * Grails async on email sending - eg signup
 * Saved exercise sets/favourites
 * Adding canned exercise set starter

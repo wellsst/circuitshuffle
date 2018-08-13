@@ -22,7 +22,6 @@ class Exercise {
     }
     static constraints = {
         //name unique: true
-        isPrivate nullable: true
         owner nullable: true
     }
 

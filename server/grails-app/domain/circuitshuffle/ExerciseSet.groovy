@@ -16,6 +16,5 @@ class ExerciseSet {
 
     static constraints = {
         owner nullable: true
-
     }
 }
