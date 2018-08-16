@@ -1,6 +1,6 @@
 package circuitshuffle
 
-class ExerciseSetRep {
+class ExerciseSetRep implements Comparable {
 
     Exercise exercise
     int nrReps
@@ -9,9 +9,14 @@ class ExerciseSetRep {
     static belongsTo = [exerciseSet: ExerciseSet]
 
     static mapping = {
-        sort position:"asc"
+        //sort position:"asc"
     }
 
     static constraints = {
+    }
+
+    @Override
+    int compareTo(Object o) {
+        this.position.compareTo(o.position)
     }
 }

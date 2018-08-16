@@ -36,12 +36,14 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * History charts / month by month etc
 * Realtime calories (will need some basic user info age.weight/sex)
 * Voice - say the name of the exercise or motiviation as well
+* Exercise instructions with either images or video
 * Goals and how much are met - A user setting to save to DB
 * Partner/group workouts?
 * Put grails plugin jasypt config in ext files: http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption
 * If a user is not on DB need better rejection to front-end
 * Send email via non-Gmail: https://www.oodlestechnologies.com/blogs/Sending-email-through-amazon-mail-service-in-Grails
 * Better auth maybe: 
+    * http://jasonwatmore.com/post/2018/05/16/angular-6-user-registration-and-login-example-tutorial
     * https://medium.com/@ozgurgul/angular-6-login-and-router-tutorial-ac5fc5d3027f
     * http://mherman.org/blog/2018/04/17/authentication-in-angular-with-ngrx/#.WuESstNuZQM
     * http://www.devglan.com/spring-security/angular-jwt-authentication
@@ -57,26 +59,42 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * forgotten pass
 * Week by week, month by month reports or charts or something.
 * Scheduled reminders to get moving and weekly/monthly report
+* Hide signup prompts if user logged in eg on intro page
+* Add own custom exercises - better than simple version
+* Deleting of custom exercises - better than simple version
+* Move the LoginController email HTML to be streaming groovy template or similar
+
+## WIP
+
+* Display logged in as username  (needs alignment)
+
+* Option during workout to skip current rep
+* Option to not do exercise (from exercise list, temporarily for user)
+
 * Add own custom exercises - needs to be owned by user
 * Deleting of custom exercises - check if user owns
 
-## WIP
-* Move the LoginController email HTML to be streaming groovy template or similar
-* Display logged in as username  (needs alignment)
-
-* Add own custom exercises - better than simple version
-* Deleting of custom exercises - better than simple version
-
-* Check owner being set on save of exercise set
-* Ensure user cannot update built in sets
-
 ### Deferred
 
-## Add as exercises
+## Add as data
+* Warmup sets
+* Milfit sets
+* Cross fit sets or Murph
+* Isometric sets
+* Punching with weights
+* https://gmb.io/bodyweight-leg-exercises/
+* https://gmb.io/core-strength/
 
 ## Done
 
-#### To be reld
+#### To be released
+* Check owner being set on save of exercise set
+* Ensure user cannot update built in sets
+* Sorting on position for ExerciseSet
+* Redirect to landing page on not logged in
+
+### v30, 31
+* Fixes to startup/lookup data around sets 
 
 #### v29
 * Grails async on email sending - eg signup

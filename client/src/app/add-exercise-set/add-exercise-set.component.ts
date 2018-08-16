@@ -6,6 +6,7 @@ import {map, startWith} from 'rxjs/operators';
 import {ExerciseLookupService} from '../exercise-lookup.service';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {ExerciseSetService} from '../exercise-set.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-exercise-set',
@@ -37,9 +38,9 @@ export class AddExerciseSetComponent implements OnInit {
 
   constructor(private exerciseService: ExerciseLookupService,
               private exerciseSetService: ExerciseSetService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
     this.exerciseSet.exerciseReps = [];
-
   }
 
   ngOnInit() {
@@ -53,7 +54,9 @@ export class AddExerciseSetComponent implements OnInit {
             map(name => name ? this.filter(name) : this.exerciseList.slice())
           );
       },
-      err => console.error(err),
+      err => {
+        console.error(err);
+      },
       () => console.log('done loading exercise list: ' + this.exerciseList[0])
     );
 

@@ -13,6 +13,7 @@ import {
 import {map, startWith} from 'rxjs/operators';
 import {HistoryService} from "../history.service";
 import {Exercise} from "../model/model";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-history',
@@ -59,7 +60,7 @@ export class ViewHistoryComponent implements OnInit {
     this.refreshSummaries()
   }
 
-  constructor(private historyService: HistoryService) {
+  constructor(private historyService: HistoryService, private router: Router) {
 
     /*this.filteredExercises = this.exerciseControl.valueChanges.pipe(
       startWith(null),
@@ -117,9 +118,8 @@ export class ViewHistoryComponent implements OnInit {
       },
       err => {
         console.error(err)
-        //this.authenticationService.logout()
       },
-      () => console.log('done loading history: ')
+      () => console.log('done loading history: ');
     )
 
   }

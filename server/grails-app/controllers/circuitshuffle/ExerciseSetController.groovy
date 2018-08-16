@@ -20,7 +20,7 @@ class ExerciseSetController extends BaseController {
             respond exerciseSets
         } catch (all) {
             log.error(all.message)
-            render status: NOT_FOUND
+            render status: UNAUTHORIZED
         }
     }
 
@@ -29,7 +29,6 @@ class ExerciseSetController extends BaseController {
     }
 
     def save(ExerciseSet exerciseSet) {
-
         User user = checkPermissions(getUserToken())
 
         if (exerciseSet == null) {
@@ -49,6 +48,10 @@ class ExerciseSetController extends BaseController {
 
     def update(ExerciseSet exerciseSet) {
         User user = checkPermissions(getUserToken())
+        if (exerciseSet.owner != user) {
+            render status: FORBIDDEN
+            return
+        }
 
         if (exerciseSet == null) {
             render status: NOT_FOUND
@@ -68,8 +71,12 @@ class ExerciseSetController extends BaseController {
     def delete(Long id) {
 
         User user = checkPermissions(getUserToken())
-        // todo: Check user is the owner
-        
+        ExerciseSet exerciseSet = exerciseSetService.get(id)
+        if (exerciseSet.owner != user) {
+            render status: FORBIDDEN
+            return
+        }
+
         if (id == null) {
             render status: NOT_FOUND
             return

@@ -18,6 +18,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {QuitPromptComponent} from "../quit-prompt/quit-prompt.component";
 import {SelectionModel} from '@angular/cdk/collections';
 import {ExerciseSetService} from '../exercise-set.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -96,7 +97,8 @@ export class StartCircuitComponent implements OnInit {
               private historyService: HistoryService,
               private exerciseSetService: ExerciseSetService,
               public snackBar: MatSnackBar,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private router: Router) {
 
     for (let suit of this.suits) {
       suit.circuitSetupControl = new FormControl()
@@ -137,7 +139,9 @@ export class StartCircuitComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      err => console.error(err),
+      err => {
+        console.error(err);
+      },
       () => console.log('done loading exercise set list: ' + this.setList[0])
     );
   }
@@ -215,7 +219,7 @@ export class StartCircuitComponent implements OnInit {
 
   private buildSetBasedCircuit(circuit) {
     this.selectedSets.selected.forEach(set => {
-            
+
       set.exerciseReps.forEach(rep => {
         let repToDo = new ExerciseRepetition();
         repToDo.reps = rep.nrReps;

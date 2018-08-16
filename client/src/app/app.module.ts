@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -49,17 +49,18 @@ import {TimerComponent} from './timer/timer.component';
 import 'moment-duration-format';
 import {SecsAsTimePipe} from './secs-as-time.pipe';
 import {QuitPromptComponent} from './quit-prompt/quit-prompt.component';
-import {AuthService} from "./auth.service";
-import {AuthGuard} from "./guards/auth.guard";
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-import {LoginComponent} from "./login/login.component";
-import {SignupComponent} from "./signup/signup.component";
-import { LogoutComponent } from './logout/logout.component';
-import { UserInfoComponent } from './user-info/user-info.component';
-import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { AddExerciseSetComponent } from './add-exercise-set/add-exercise-set.component';
-import { ArraySortPipe } from './array-sort.pipe';
+import {AuthService} from './auth.service';
+import {AuthGuard} from './guards/auth.guard';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {LoginComponent} from './login/login.component';
+import {SignupComponent} from './signup/signup.component';
+import {LogoutComponent} from './logout/logout.component';
+import {UserInfoComponent} from './user-info/user-info.component';
+import {ForgottenPasswordComponent} from './forgotten-password/forgotten-password.component';
+import {ChangePasswordComponent} from './change-password/change-password.component';
+import {AddExerciseSetComponent} from './add-exercise-set/add-exercise-set.component';
+import {ArraySortPipe} from './array-sort.pipe';
+import {ErrorInterceptor} from './ErrorInterceptor';
 
 
 const appRoutes: Routes = [
@@ -138,7 +139,9 @@ const appRoutes: Routes = [
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AuthGuard,
-    AuthService],
+    AuthService,
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 
 })

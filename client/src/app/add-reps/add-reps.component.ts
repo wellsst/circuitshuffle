@@ -8,6 +8,7 @@ import {HistoryService} from '../history.service';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {ExerciseSetService} from '../exercise-set.service';
 import {SelectionModel} from '@angular/cdk/collections';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-reps',
@@ -49,7 +50,8 @@ export class AddRepsComponent implements OnInit {
               private historyService: HistoryService,
               private exerciseService: ExerciseLookupService,
               private exerciseSetService: ExerciseSetService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
     /*this.formGroup = this.fb.group({
       completedOn: new Date(),
       reps: [10, [Validators.min(2), Validators.max(100)]],
@@ -74,7 +76,9 @@ export class AddRepsComponent implements OnInit {
             map(name => name ? this.filter(name) : this.exerciseList.slice())
           );
       },
-      err => console.error(err),
+      err => {
+        console.error(err);
+      },
       () => console.log('done loading exercise list: ' + this.exerciseList[0])
     );
 
