@@ -117,11 +117,9 @@ export class ViewHistoryComponent implements OnInit {
         this.summaries.push({header: "All", summaries: this.historyService.getSummaryForAll(data)})*/
       },
       err => {
-        console.error(err)
+        console.error(err);
       },
       () => console.log('done loading history: ');
-    )
-
   }
 
   // TODO: Filter on the exercise name...maybe
