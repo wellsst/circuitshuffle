@@ -50,6 +50,7 @@ export class Exercise {
   description: String
   exerciseTypes: ExerciseType[]
   owner: User;
+  skip: boolean;
 }
 
 export class ExerciseHistory {

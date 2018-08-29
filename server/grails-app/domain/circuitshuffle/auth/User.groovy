@@ -1,5 +1,6 @@
 package circuitshuffle.auth
 
+import circuitshuffle.Exercise
 import circuitshuffle.ExerciseHistory
 import com.bloomhealthco.jasypt.GormEncryptedStringType
 import groovy.transform.EqualsAndHashCode
@@ -22,7 +23,7 @@ class User implements Serializable {
 
     String token
 
-    static hasMany = [exerciseHistories: ExerciseHistory]
+    static hasMany = [exerciseHistories: ExerciseHistory, skipList: Exercise]
 
     Set<Role> getAuthorities() {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>

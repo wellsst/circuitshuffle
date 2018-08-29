@@ -69,7 +69,7 @@ const appRoutes: Routes = [
   {path: 'logout', component: LogoutComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'view-history', component: ViewHistoryComponent, canActivate: [AuthGuard]},
-  {path: 'exercise-list', component: ExerciseListComponent},
+  {path: 'exercise-list', component: ExerciseListComponent, canActivate: [AuthGuard]},
   {path: 'start-circuit', component: StartCircuitComponent, canActivate: [AuthGuard]},
   {path: 'add-exercise', component: AddExerciseComponent, canActivate: [AuthGuard]},
   {path: 'add-exercise-set', component: AddExerciseSetComponent, canActivate: [AuthGuard]},

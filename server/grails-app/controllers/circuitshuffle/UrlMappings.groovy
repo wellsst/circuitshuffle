@@ -16,6 +16,11 @@ class UrlMappings {
         "/signup" (controller: "login", action: "signup")
         "/login" (controller: "login", action: "login")
 
+        "/exerciseSkipList" (controller: "exercise", action: "exerciseSkipList")
+        "/exerciseListNonSkip" (controller: "exercise", action: "exerciseListNonSkip")
+        "/addToSkipList/$id(.$format)?" (controller: "exercise", action: "addToSkipList")
+        "/removeFromSkipList/$id(.$format)?" (controller: "exercise", action: "removeFromSkipList")
+
 
         delete "/$controller/$id(.$format)?"(action:"delete")
         get "/$controller(.$format)?"(action:"index")

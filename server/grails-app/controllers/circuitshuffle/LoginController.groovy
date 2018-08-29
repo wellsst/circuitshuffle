@@ -3,14 +3,11 @@ package circuitshuffle
 import circuitshuffle.auth.Role
 import circuitshuffle.auth.User
 import circuitshuffle.auth.UserRole
-import grails.async.Promise
+import grails.async.web.AsyncController
 import org.apache.commons.lang.WordUtils
 import org.springframework.http.HttpStatus
-import static grails.async.Promises.*
 
-import static org.springframework.http.HttpStatus.NOT_FOUND
-
-class LoginController {
+class LoginController implements AsyncController {
     static responseFormats = ['json', 'xml']
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -20,7 +17,6 @@ class LoginController {
 
     def show() {
         if (request.get) {
-            println "redning view 'show'"
             respond "testing 123"
         }
 
@@ -82,10 +78,9 @@ class LoginController {
             Role userRole = Role.findOrSaveByAuthority("ROLE_USER")
             UserRole.create(newUser, userRole, true)
 
-            // todo: Move to a Service:
-            Promise p = task {
+            def ctx = startAsync()
+            ctx.start {
                 // Long running task
-
                 mailService.sendMail {
                     to emailAddress
                     from "websystemz@gmail.com"
@@ -104,13 +99,14 @@ class LoginController {
                         
                     """
                 }
+                ctx.complete()
             }
-            p.onError { Throwable err ->
+            /*p.onError { Throwable err ->
                 println "An error occured ${err.message}"
             }
             p.onComplete { result ->
                 println "Promise returned $result"
-            }
+            }*/
 
             /*Map response = [username: emailAddress, password:password]
             respond response*/

@@ -13,7 +13,9 @@ class BaseController {
     }
 
     def checkPermissions(String token) {
-        //def token = request.getHeader("token")
+        if (!token) {
+            throw new Exception("No token provided")
+        }
         log.info "Check permissions: ${token}"
         User user = User.findByUsername(token, [cache: true])
         if (!user) {

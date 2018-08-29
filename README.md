@@ -26,6 +26,8 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 
 ## Future features
 
+* Consider changing client/server comms to https://graphql.org/, https://www.apollographql.com/docs/angular/basics/queries.html, 
+https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.goodapi.co/rest-vs-graphql-a-critical-review-5f77392658e7 
 * Slider to bias legs/arms/core?
 * Compete against other , perhaps have ranks like a military
 * See how consistent you are
@@ -39,6 +41,7 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Exercise instructions with either images or video
 * Goals and how much are met - A user setting to save to DB
 * Partner/group workouts?
+* Programs - create default and user defined programmes.  
 * Put grails plugin jasypt config in ext files: http://plugins.grails.org/plugin/dtanner/org.grails.plugins%3Ajasypt-encryption
 * If a user is not on DB need better rejection to front-end
 * Send email via non-Gmail: https://www.oodlestechnologies.com/blogs/Sending-email-through-amazon-mail-service-in-Grails
@@ -50,8 +53,9 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 
 ## Small changes on the board
 
-* Warmups/cooldowns -  Add perhaps as just a suggestion
-* Fix LookupData to not include description in the findOrSave
+* Warmups/cooldowns -  Add perhaps as just a suggestion - make these an exercise type so they dont get mixed up
+* Possibly change the Exercise domain to include a parent `Exercise` called `variationOf` eg Diamond push-ups are a variation of Pushups - good for reporting  
+* Fix all `Exercise` domains in LookupData to not include description in the findOrSave
 * Add some kind of legal verbiage, and agree to terms checkbox on signup
 * stop the timer in Angular and display the correct total time (properly)
 * Better app for mobile see like: https://houssein.me/progressive-angular-applications 
@@ -62,15 +66,15 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Hide signup prompts if user logged in eg on intro page
 * Add own custom exercises - better than simple version
 * Deleting of custom exercises - better than simple version
-* Move the LoginController email HTML to be streaming groovy template or similar
+* Move the `LoginController` email HTML to be streaming groovy template or similar
+* Display logged in as username  (needs alignment)
+* Compress nr of history rows - create summaries on a scheduled basis, only needed since the free Heroku has 10k limit! 
+* Support for Admin users
 
 ## WIP
 
-* Display logged in as username  (needs alignment)
-
 * Option during workout to skip current rep
-* Option to not do exercise (from exercise list, temporarily for user)
-
+* Screen block when saving etc...
 * Add own custom exercises - needs to be owned by user
 * Deleting of custom exercises - check if user owns
 
@@ -84,16 +88,29 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Punching with weights
 * https://gmb.io/bodyweight-leg-exercises/
 * https://gmb.io/core-strength/
+* https://www.popularmechanics.com/science/health/a22730160/exercises-that-will-save-your-knees/
+* https://www.lifehacker.com.au/2018/08/reduce-jet-lag-by-doing-this-airline-approved-workout-when-you-land/
+* https://blog.myfitnesspal.com/hate-burpees-here-are-11-alternatives/
+* https://blog.myfitnesspal.com/9-kettlebell-exercises-everyone/a
+* https://www.menshealth.com/fitness/a22799174/crossfit-workouts-at-home/
+
 
 ## Done
 
 #### To be released
+* Exercise list added to protected resources
+* Option to not do exercise (from exercise list, temporarily for user) - config in ex ercise list and used in start circuit
+* Fix the async email - not sending
+
+#### v32
+
 * Check owner being set on save of exercise set
 * Ensure user cannot update built in sets
 * Sorting on position for ExerciseSet
 * Redirect to landing page on not logged in
 
-### v30, 31
+
+#### v30, 31
 * Fixes to startup/lookup data around sets 
 
 #### v29

@@ -107,7 +107,8 @@ export class StartCircuitComponent implements OnInit {
 
   ngOnInit() {
     // this.setupTimer();
-    this.exerciseList = this.exerciseService.getList().subscribe(
+    // this.exerciseList = this.exerciseService.getFullList().subscribe(
+    this.exerciseList = this.exerciseService.getUserNonSkipList().subscribe(
       data => {
         this.exerciseList = data
 

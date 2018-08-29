@@ -44,7 +44,7 @@ export class AddExerciseSetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exerciseList = this.exerciseService.getList().subscribe(
+    this.exerciseList = this.exerciseService.getFullList().subscribe(
       data => {
         this.exerciseList = data;
         this.filteredOptions = this.exerciseControl.valueChanges

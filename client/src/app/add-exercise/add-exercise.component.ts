@@ -16,7 +16,7 @@ export class AddExerciseComponent implements OnInit {
 
   exercise = new Exercise();
   targetAreasSelected = [];
-  targetAreas; //: Observable<ExerciseType[]>
+  targetAreas; // : Observable<ExerciseType[]>
 
   formControl = new FormControl('', [
     Validators.required
@@ -26,8 +26,7 @@ export class AddExerciseComponent implements OnInit {
 
   constructor(
     private exerciseService: ExerciseLookupService,
-    public snackBar: MatSnackBar,
-    private router: Router) {
+    public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {

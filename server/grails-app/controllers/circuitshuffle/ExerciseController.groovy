@@ -29,8 +29,63 @@ class ExerciseController extends BaseController {
             respond exercises
         } catch (all) {
             log.error(all.message)
-            render status: NOT_FOUND
+            render status: UNAUTHORIZED
         }
+
+    }
+
+    def exerciseListNonSkip(Integer max) {
+        try {
+            User user = checkPermissions(getUserToken())
+            def exercises = Exercise.findAllByOwnerIsNullOrOwner(user)
+
+            exercises = exercises.findAll { exercise ->
+                !user.skipList.contains(exercise)
+            }
+
+            respond exercises
+        } catch (all) {
+            log.error(all.message)
+            render status: UNAUTHORIZED
+        }
+    }
+
+    def exerciseSkipList() {
+        try {
+            User user = checkPermissions(getUserToken())
+            respond user.skipList
+        } catch (all) {
+            render status: UNAUTHORIZED
+        }
+    }
+
+    def addToSkipList(int id) {
+        User user
+        try {
+            user = checkPermissions(getUserToken())
+        } catch (all) {
+            render status: UNAUTHORIZED
+            return
+        }
+        Exercise exercise = Exercise.get(id)
+        user.addToSkipList(exercise)
+        
+        user.save(flush: true)
+        respond user.skipList, [status: OK]
+    }
+
+    def removeFromSkipList(int id) {
+        User user
+        try {
+            user = checkPermissions(getUserToken())
+        } catch (all) {
+            render status: UNAUTHORIZED
+            return
+        }
+        Exercise exercise = Exercise.get(id)
+        user.removeFromSkipList(exercise)
+        user.save(flush: true)
+        respond user.skipList, [status: OK]
     }
 
     def show(Long id) {
