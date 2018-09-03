@@ -60,8 +60,10 @@ import {ForgottenPasswordComponent} from './forgotten-password/forgotten-passwor
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {AddExerciseSetComponent} from './add-exercise-set/add-exercise-set.component';
 import {ArraySortPipe} from './array-sort.pipe';
-import {ErrorInterceptor} from './ErrorInterceptor';
 
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import {ErrorInterceptor} from './ErrorInterceptor';
 
 const appRoutes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -134,7 +136,9 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatSelectModule,
     MatTabsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NgProgressModule.forRoot(),
+    NgProgressHttpModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

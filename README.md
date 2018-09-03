@@ -23,6 +23,12 @@ SEDENTARY BEHAVIOUR
 Today (according to Dr Axe) the ability to perform 41 burpees in one minute is deemed ‘excellent’, 
 while ‘only’ managing 27 constitutes a ’poor’ fitness level.
  Which likely means that you’ve got work to do.
+ 
+## Dependencies
+
+* Material
+* https://github.com/MurhafSousli/ngx-progressbar
+
 
 ## Future features
 
@@ -73,8 +79,8 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
 
 ## WIP
 
+* No password auth like medium just use email and a token, see also: https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 * Option during workout to skip current rep
-* Screen block when saving etc...
 * Add own custom exercises - needs to be owned by user
 * Deleting of custom exercises - check if user owns
 
@@ -93,11 +99,17 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
 * https://blog.myfitnesspal.com/hate-burpees-here-are-11-alternatives/
 * https://blog.myfitnesspal.com/9-kettlebell-exercises-everyone/a
 * https://www.menshealth.com/fitness/a22799174/crossfit-workouts-at-home/
-
+* Overcoming gravity book
 
 ## Done
 
 #### To be released
+
+#### v34
+* Screen block when saving /http requests...
+
+#### v33
+
 * Exercise list added to protected resources
 * Option to not do exercise (from exercise list, temporarily for user) - config in ex ercise list and used in start circuit
 * Fix the async email - not sending
@@ -190,6 +202,17 @@ Angular simple "auth" Derived from http://jasonwatmore.com/post/2016/08/16/angul
 
 
 # Useful things to remember
+
+If yarn doesn't start (I couldnt see any messages with detail) then: 
+
+```
+cd client
+gradle clean
+find . -type d -name .bin -exec rm -rf {} \;  
+gradle buildClient
+```
+
+https://medium.com/@wellsst/angular-with-grails-on-heroku-211e35177804
 
 On Heroku: 
 https://circuitshuffle.herokuapp.com/ 
