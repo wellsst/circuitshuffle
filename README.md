@@ -73,13 +73,13 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
 * Add own custom exercises - better than simple version
 * Deleting of custom exercises - better than simple version
 * Move the `LoginController` email HTML to be streaming groovy template or similar
-* Display logged in as username  (needs alignment)
-* Compress nr of history rows - create summaries on a scheduled basis, only needed since the free Heroku has 10k limit! 
+* Display logged in as username  (needs alignment) 
 * Support for Admin users
 
 ## WIP
 
 * No password auth like medium just use email and a token, see also: https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
+* Better token handling: https://theinfogrid.com/tech/developers/angular/refreshing-authorization-tokens-angular-6/
 * Option during workout to skip current rep
 * Add own custom exercises - needs to be owned by user
 * Deleting of custom exercises - check if user owns
@@ -105,8 +105,14 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
 
 #### To be released
 
+#### v35
+* Compress nr of history rows - 2 parts:
+    * Update historical ones, only needed since the free Heroku has 10k limit!  (this can happen as user works)
+    * Just check when new ones added 
+
 #### v34
 * Screen block when saving /http requests...
+* Version upgrades due to flex-layout compile errors
 
 #### v33
 

@@ -2,6 +2,7 @@ package circuitshuffle
 
 import circuitshuffle.auth.User
 import grails.validation.ValidationException
+import groovy.time.TimeCategory
 
 import static org.springframework.http.HttpStatus.*
 
@@ -55,12 +56,23 @@ class ExerciseHistoryController extends BaseController {
 
         try {
             exerciseHistory.user = user
-            /*exerciseHistory.validate()
-            exerciseHistory.errors.allErrors.each {
-                log.info it.toString()
-            }*/
-            //user.addToExerciseHistories(exerciseHistory)
-            //user.save()
+
+            def today = new Date().clearTime()
+            def eod
+
+            use (TimeCategory) {
+                eod = today + 1.day - 1.millisecond
+            }
+
+            // Check existing reocrds for today if so just update them
+            List<ExerciseHistory> todaysRecords = ExerciseHistory.findAllByExerciseAndCompletedOnBetween(
+                    exerciseHistory.exercise, today, eod)
+            todaysRecords.each { hist ->
+                exerciseHistory.reps += hist.reps
+                hist.delete(flush: true)
+                log.info "exHist nr reps ${exerciseHistory.reps} (added ${hist.reps})"
+            }
+
             exerciseHistoryService.save(exerciseHistory)
         } catch (ValidationException e) {
             respond exerciseHistory.errors, view: 'create'

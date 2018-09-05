@@ -8,6 +8,8 @@ import {AuthService} from './auth.service';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthService) {}
 
+  // could enahnce with logging like: https://theinfogrid.com/tech/developers/angular/logging-http-errors-in-angular-6
+  // token handling: https://theinfogrid.com/tech/developers/angular/refreshing-authorization-tokens-angular-6/
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
       if (err.status === 401 || err.status === 403) {
