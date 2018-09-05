@@ -1,31 +1,38 @@
 plugins {
-    id "com.moowork.node" version "1.2.0"
+  id "com.moowork.node" version "1.2.0"
 }
 
 node {
-    version = '10.9.0'
-    yarnVersion = '1.9.4'
-    download = true
+  version = '10.9.0'
+  yarnVersion = '1.9.4'
+  download = true
 }
 
 task bootRun(type: YarnTask, dependsOn: 'yarn') {
-    group = 'application'
-    description = 'Start client side server'
-    args = ['run', 'start']
+  group = 'application'
+  description = 'Start client side server'
+  args = ['run', 'start']
 }
 
 task test(type: YarnTask, dependsOn: 'yarn') {
-    group = 'verification'
-    description = 'Execute unit tests'
-    args = ['run', 'test']
+  group = 'verification'
+  description = 'Execute unit tests'
+  args = ['run', 'test']
 }
 
 task integrationTest(type: YarnTask, dependsOn: 'yarn') {
-    args = ['run', 'e2e']
+  args = ['run', 'e2e']
 }
 
 task buildClient(type: YarnTask, dependsOn: 'yarn') {
-    group = 'build'
-    description = 'Compile client side assets for production'
-    args = ['run', 'build']
+  group = 'build'
+  description = 'Compile client side assets for production'
+  args = ['run', 'build']
+
+  inputs.files fileTree("app").matching {
+    exclude "**/dist"
+    exclude "**/node_modules"
+    exclude "**/build"
+    exclude "**/.gradle"  // <== FIXES the issue
+  }
 }
