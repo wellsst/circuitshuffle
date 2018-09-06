@@ -57,6 +57,21 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
     * http://mherman.org/blog/2018/04/17/authentication-in-angular-with-ngrx/#.WuESstNuZQM
     * http://www.devglan.com/spring-security/angular-jwt-authentication
 
+## Add as data
+* Warmup sets
+* Milfit sets
+* Cross fit sets or Murph
+* Isometric sets
+* Punching with weights
+* https://gmb.io/bodyweight-leg-exercises/
+* https://gmb.io/core-strength/
+* https://www.popularmechanics.com/science/health/a22730160/exercises-that-will-save-your-knees/
+* https://www.lifehacker.com.au/2018/08/reduce-jet-lag-by-doing-this-airline-approved-workout-when-you-land/
+* https://blog.myfitnesspal.com/hate-burpees-here-are-11-alternatives/
+* https://blog.myfitnesspal.com/9-kettlebell-exercises-everyone/a
+* https://www.menshealth.com/fitness/a22799174/crossfit-workouts-at-home/
+* Overcoming gravity book
+
 ## Small changes on the board
 
 * Warmups/cooldowns -  Add perhaps as just a suggestion - make these an exercise type so they dont get mixed up
@@ -75,39 +90,30 @@ https://grails.github.io/gorm-graphql/latest/guide/index.html, https://blog.good
 * Move the `LoginController` email HTML to be streaming groovy template or similar
 * Display logged in as username  (needs alignment) 
 * Support for Admin users
+* Compress nr of history rows - 2 parts:
+    * Update historical ones, only needed since the free Heroku has 10k limit!  (this can happen as user works)
+
 
 ## WIP
 
 * No password auth like medium just use email and a token, see also: https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 * Better token handling: https://theinfogrid.com/tech/developers/angular/refreshing-authorization-tokens-angular-6/
-* Option during workout to skip current rep
-* Add own custom exercises - needs to be owned by user
-* Deleting of custom exercises - check if user owns
 
 ### Deferred
-
-## Add as data
-* Warmup sets
-* Milfit sets
-* Cross fit sets or Murph
-* Isometric sets
-* Punching with weights
-* https://gmb.io/bodyweight-leg-exercises/
-* https://gmb.io/core-strength/
-* https://www.popularmechanics.com/science/health/a22730160/exercises-that-will-save-your-knees/
-* https://www.lifehacker.com.au/2018/08/reduce-jet-lag-by-doing-this-airline-approved-workout-when-you-land/
-* https://blog.myfitnesspal.com/hate-burpees-here-are-11-alternatives/
-* https://blog.myfitnesspal.com/9-kettlebell-exercises-everyone/a
-* https://www.menshealth.com/fitness/a22799174/crossfit-workouts-at-home/
-* Overcoming gravity book
 
 ## Done
 
 #### To be released
+* progressbar tweaks
+* Add own custom exercises - needs to be owned by user
+* Deleting of custom exercises - check if user owns
+* refresh exercise list on delete
+* Option during workout to skip current rep
+
 
 #### v35
 * Compress nr of history rows - 2 parts:
-    * Update historical ones, only needed since the free Heroku has 10k limit!  (this can happen as user works)
+    * (not done!) Update historical ones, only needed since the free Heroku has 10k limit!  (this can happen as user works)
     * Just check when new ones added 
 
 #### v34

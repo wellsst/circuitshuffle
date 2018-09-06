@@ -102,6 +102,15 @@ class ExerciseController extends BaseController {
             return
         }
 
+        User user
+        try {
+            user = checkPermissions(getUserToken())
+            exercise.owner = user
+        } catch (all) {
+            render status: UNAUTHORIZED
+            return
+        }
+
         try {
             exerciseService.save(exercise)
         } catch (ValidationException e) {
@@ -131,6 +140,20 @@ class ExerciseController extends BaseController {
     def delete(Long id) {
         if (id == null) {
             render status: NOT_FOUND
+            return
+        }
+
+        User user
+        try {
+            user = checkPermissions(getUserToken())
+        } catch (all) {
+            render status: UNAUTHORIZED
+            return
+        }
+
+        Exercise exercise = Exercise.get(id)
+        if (exercise.owner != user) {
+            render status: UNAUTHORIZED
             return
         }
 

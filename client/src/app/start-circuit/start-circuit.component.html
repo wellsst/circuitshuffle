@@ -277,6 +277,7 @@
 
     <mat-card-actions>
       <div *ngIf="!circuitComplete; else circuit_complete_buttons">
+        <button mat-button (click)="skipRep()" [disabled]="circuitComplete">Skip</button>
         <button mat-button (click)="doNextRep()" [disabled]="circuitComplete">Next</button>
         <button mat-button (click)="quitCircuit()">Quit</button>
       </div>

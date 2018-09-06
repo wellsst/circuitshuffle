@@ -348,7 +348,7 @@ export class StartCircuitComponent implements OnInit {
     }
 
     // If done load the summary of the event
-    if (this.circuitToDo.length == 1) {
+    if (this.circuitToDo.length === 1) {
       this.circuitComplete = true
       this.timer.dispose()
     }
@@ -358,6 +358,30 @@ export class StartCircuitComponent implements OnInit {
     // Set the next one in the list as the current one gettin done
     this.currentRep = this.circuitToDo.shift()
     this.repSecs = 0
+  }
+
+  skipRep() {
+    // random message
+    this.openSnackBar(this.shortMsgs[Math.floor(Math.random() * this.shortMsgs.length)].summary, '')
+    let lastRepTimeTaken = 0
+
+    // Completed one yet?
+    if (this.currentRep) {
+      this.repsCompleted += this.currentRep.reps
+      this.setsCompleted += 1
+
+      // If done load the summary of the event
+      if (this.circuitToDo.length === 1) {
+        this.circuitComplete = true
+        this.timer.dispose()
+      }
+      // small hack to get total time displayed at the end of the circuit, for some reason
+      // the totalSecs keeps ticking
+      this.thisCircuitTotalSecs = this.totalSecs + lastRepTimeTaken
+      // Set the next one in the list as the current one gettin done
+      this.currentRep = this.circuitToDo.shift()
+      this.repSecs = 0;
+    }
   }
 
   quitCircuit() {

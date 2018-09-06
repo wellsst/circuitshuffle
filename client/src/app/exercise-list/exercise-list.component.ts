@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {ExerciseLookupService} from '../exercise-lookup.service';
 import {throwError as observableThrowError} from 'rxjs/index';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-exercise-list',
@@ -24,6 +25,10 @@ export class ExerciseListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchExerciseList();
+  }
+
+  private fetchExerciseList() {
     this.exerciseService.getFullList().subscribe(
       data => {
         this.exerciseList = data;
@@ -37,9 +42,9 @@ export class ExerciseListComponent implements OnInit {
           skipList => {
             this.skipList = skipList;
             for (let exercise of this.exerciseList) {
-               if (this.isInSkipList(exercise)) {
-                 exercise.skip = true;
-               }
+              if (this.isInSkipList(exercise)) {
+                exercise.skip = true;
+              }
             }
           },
           () => console.log('done loading exercise skip list: ' + this.exerciseList[0])
@@ -65,6 +70,9 @@ export class ExerciseListComponent implements OnInit {
           '', {
             duration: 5000,
           });
+
+        this.fetchExerciseList();
+
         return true;
       },
       error => {

@@ -137,7 +137,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatTabsModule,
     RouterModule.forRoot(appRoutes),
-    NgProgressModule.forRoot(),
+    NgProgressModule.forRoot({color: '#FF6699'}),
     NgProgressHttpModule
   ],
   providers: [
