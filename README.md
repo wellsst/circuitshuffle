@@ -29,6 +29,11 @@ while ‘only’ managing 27 constitutes a ’poor’ fitness level.
 * Material
 * https://github.com/MurhafSousli/ngx-progressbar
 
+## What does it look like?
+
+Currently hosted here: http://circuitshuffle.herokuapp.com but this is a free dyno, so it takes a few minutes to startup, you'll likely see an error so refresh in a minute or 2.  
+
+// todo: screenshots
 
 ## Future features
 
